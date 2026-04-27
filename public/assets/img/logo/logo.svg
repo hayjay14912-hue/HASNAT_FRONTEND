@@ -1,0 +1,23 @@
+<svg width="170" height="35" viewBox="0 0 680 140" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NEES">
+  <path
+    d="M40 110V30L170 110V30"
+    stroke="#0B0B0B"
+    stroke-width="28"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path d="M230 40H350" stroke="#0B0B0B" stroke-width="28" stroke-linecap="round" />
+  <path d="M230 70H350" stroke="#0B0B0B" stroke-width="28" stroke-linecap="round" />
+  <path d="M230 100H350" stroke="#0B0B0B" stroke-width="28" stroke-linecap="round" />
+  <path d="M400 40H520" stroke="#0B0B0B" stroke-width="28" stroke-linecap="round" />
+  <path d="M400 70H520" stroke="#0B0B0B" stroke-width="28" stroke-linecap="round" />
+  <path d="M400 100H520" stroke="#0B0B0B" stroke-width="28" stroke-linecap="round" />
+  <path
+    d="M640 45C600 25 560 45 590 70C620 90 680 80 650 105C620 130 560 115 580 95"
+    stroke="#0B0B0B"
+    stroke-width="28"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+</svg>

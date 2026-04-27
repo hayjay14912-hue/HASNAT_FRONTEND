@@ -1,0 +1,50 @@
+/* Disable navbar hover effects */
+.main-menu > nav > ul > li:hover > a,
+.main-menu > nav > ul > li:hover > a::after {
+    color: var(--tp-common-black) !important;
+}
+
+.main-menu > nav > ul > li:hover > .tp-submenu,
+.main-menu > nav > ul > li:hover > .tp-mega-menu {
+    visibility: hidden !important;
+    opacity: 0 !important;
+    top: 120% !important;
+}
+
+.main-menu > nav > ul > li .tp-submenu li:hover > a,
+.main-menu > nav > ul > li .tp-submenu li:hover > a::after {
+    color: var(--tp-text-body) !important;
+}
+
+.main-menu > nav > ul > li .tp-submenu li:hover > .tp-submenu {
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+.main-menu > nav > ul > li .tp-mega-menu .tp-submenu {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Disable hover effects for mobile menu as well */
+.tp-main-menu-content ul li:hover > a,
+.tp-main-menu-content ul li:hover > a::after {
+    color: var(--tp-common-black) !important;
+}
+
+.tp-main-menu-content ul li:hover > .tp-submenu,
+.tp-main-menu-content ul li:hover > .tp-mega-menu {
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Ensure dropdowns are always hidden unless explicitly shown via JavaScript */
+.main-menu > nav > ul > li .tp-submenu,
+.main-menu > nav > ul > li .tp-mega-menu {
+    pointer-events: none;
+}
+
+/* Re-enable pointer events for the menu items themselves */
+.main-menu > nav > ul > li > a {
+    pointer-events: auto;
+}

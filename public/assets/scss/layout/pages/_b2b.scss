@@ -1,0 +1,786 @@
+@use '../../utils' as *;
+
+.nees-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tp-theme-primary);
+  margin-bottom: 14px;
+}
+
+.nees-section-head {
+  span {
+    @extend .nees-eyebrow;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-size: 38px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+
+    @media #{$md, $sm, $xs} {
+      font-size: 30px;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    color: var(--tp-text-1);
+    margin-bottom: 0;
+  }
+}
+
+.nees-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  @include tp-transition();
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.nees-btn-primary {
+  background: var(--tp-theme-primary);
+  border-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
+
+  &:hover {
+    color: var(--tp-common-white);
+    opacity: 0.95;
+  }
+}
+
+.nees-btn-outline {
+  border-color: rgba(1, 15, 28, 0.22);
+  color: var(--tp-common-black);
+  background-color: transparent;
+
+  &:hover {
+    border-color: var(--tp-theme-primary);
+    color: var(--tp-theme-primary);
+  }
+}
+
+.nees-btn-ghost {
+  background-color: var(--tp-common-white);
+  border-color: rgba(1, 15, 28, 0.12);
+  color: var(--tp-common-black);
+
+  &:hover {
+    border-color: var(--tp-common-black);
+    color: var(--tp-common-black);
+  }
+}
+
+.nees-inline-link {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  color: var(--tp-theme-primary);
+
+  &:hover {
+    color: var(--tp-theme-primary);
+    text-decoration: underline;
+  }
+}
+
+.nees-gateway {
+  background: linear-gradient(180deg, #f6f8fb 0%, #ffffff 100%);
+}
+
+.nees-gateway-card {
+  background-color: var(--tp-common-white);
+  border: 1px solid rgba(1, 15, 28, 0.1);
+  border-radius: 14px;
+  padding: 30px;
+
+  h3 {
+    font-size: 28px;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+
+  p {
+    color: var(--tp-text-1);
+    margin-bottom: 26px;
+  }
+}
+
+.nees-gateway-tag {
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--tp-common-black);
+  border: 1px solid rgba(1, 15, 28, 0.15);
+  border-radius: 40px;
+  padding: 4px 10px;
+  margin-bottom: 18px;
+}
+
+.nees-trust-strip {
+  padding: 0 0 45px;
+}
+
+.nees-trust-card {
+  border: 1px solid rgba(1, 15, 28, 0.12);
+  border-radius: 12px;
+  background-color: #f7fafc;
+  padding: 18px;
+
+  .nees-trust-card-title {
+    margin-bottom: 4px;
+    color: var(--tp-text-1);
+    font-size: 13px;
+  }
+
+  h4 {
+    margin-bottom: 0;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+}
+
+.nees-featured-devices {
+  background-color: #f8fbfd;
+}
+
+.nees-device-listing {
+  background-color: #f8fbfd;
+}
+
+.nees-device-card {
+  border: 1px solid rgba(1, 15, 28, 0.1);
+  border-radius: 14px;
+  background-color: var(--tp-common-white);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    font-size: 22px;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin-bottom: 16px;
+    color: var(--tp-text-1);
+  }
+
+  ul {
+    margin-bottom: 20px;
+    padding-left: 16px;
+
+    li {
+      color: var(--tp-text-1);
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+  }
+}
+
+.nees-device-chip {
+  align-self: flex-start;
+  padding: 5px 10px;
+  border-radius: 100px;
+  background-color: #eef5ff;
+  color: var(--tp-theme-primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.nees-device-card-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.nees-cta-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nees-hero-cta {
+  justify-content: flex-start;
+
+  @media #{$lg, $md, $sm, $xs} {
+    justify-content: flex-start;
+  }
+}
+
+.nees-devices-hero {
+  background-color: var(--tp-common-white);
+
+  h1 {
+    font-size: 46px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+
+    @media #{$md, $sm, $xs} {
+      font-size: 34px;
+    }
+  }
+
+  p {
+    color: var(--tp-text-1);
+    margin-bottom: 0;
+  }
+}
+
+.nees-device-detail-head {
+  p {
+    color: var(--tp-text-1);
+    font-size: 18px;
+    margin-bottom: 22px;
+  }
+
+  h1 {
+    font-size: 48px;
+    line-height: 1.15;
+    margin-bottom: 12px;
+
+    @media #{$lg, $md, $sm, $xs} {
+      font-size: 34px;
+    }
+  }
+}
+
+.nees-device-section {
+  border: 1px solid rgba(1, 15, 28, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+  background-color: #ffffff;
+
+  h3 {
+    margin-bottom: 12px;
+    font-size: 24px;
+  }
+
+  p,
+  li {
+    color: var(--tp-text-1);
+  }
+
+  ul {
+    margin-bottom: 0;
+    padding-left: 18px;
+
+    li {
+      margin-bottom: 8px;
+    }
+  }
+}
+
+.nees-spec-table {
+  margin-bottom: 0;
+
+  tr {
+    th,
+    td {
+      vertical-align: middle;
+      padding: 12px;
+      border-color: rgba(1, 15, 28, 0.1);
+    }
+
+    th {
+      width: 35%;
+      color: var(--tp-common-black);
+      font-weight: 600;
+    }
+
+    td {
+      color: var(--tp-text-1);
+    }
+  }
+}
+
+.nees-cert-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  span {
+    display: inline-flex;
+    border: 1px solid rgba(1, 15, 28, 0.14);
+    border-radius: 100px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--tp-common-black);
+  }
+}
+
+.nees-device-sidebar {
+  position: sticky;
+  top: 110px;
+
+  @media #{$lg, $md, $sm, $xs} {
+    position: static;
+  }
+}
+
+.nees-device-sidebar-card {
+  border: 1px solid rgba(1, 15, 28, 0.1);
+  border-radius: 12px;
+  background: #f7fafc;
+  padding: 20px;
+
+  h4 {
+    margin-bottom: 8px;
+    font-size: 22px;
+  }
+
+  p {
+    color: var(--tp-text-1);
+    margin-bottom: 14px;
+  }
+}
+
+.nees-b2b-landing {
+  h1 {
+    font-size: 44px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+
+    @media #{$md, $sm, $xs} {
+      font-size: 33px;
+    }
+  }
+
+  p {
+    color: var(--tp-text-1);
+  }
+}
+
+.nees-feature-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 24px;
+
+  article {
+    border: 1px solid rgba(1, 15, 28, 0.1);
+    border-radius: 10px;
+    padding: 14px;
+    background-color: #f7fafc;
+
+    h4 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.nees-b2b-panel {
+  border: 1px solid rgba(1, 15, 28, 0.12);
+  border-radius: 14px;
+  padding: 28px;
+  background-color: #ffffff;
+
+  h3 {
+    font-size: 30px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: var(--tp-text-1);
+    margin-bottom: 20px;
+  }
+}
+
+.nees-contact-points {
+  margin-bottom: 20px;
+
+  li {
+    color: var(--tp-text-1);
+    margin-bottom: 8px;
+
+    a {
+      color: var(--tp-theme-primary);
+    }
+  }
+}
+
+.nees-quote-form-wrap {
+  border: 1px solid rgba(1, 15, 28, 0.1);
+  border-radius: 14px;
+  background-color: #ffffff;
+  padding: 24px;
+}
+
+.nees-quote-form-head {
+  h3 {
+    margin-bottom: 8px;
+    font-size: 28px;
+  }
+
+  p {
+    color: var(--tp-text-1);
+    margin-bottom: 18px;
+  }
+}
+
+.nees-stepper {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+
+  @media #{$md, $sm, $xs} {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.nees-step-item {
+  border: 1px solid rgba(1, 15, 28, 0.12);
+  border-radius: 10px;
+  padding: 10px;
+
+  span {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background-color: rgba(1, 15, 28, 0.08);
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin-bottom: 0;
+    font-size: 12px;
+    line-height: 1.3;
+    color: var(--tp-text-1);
+  }
+
+  &.is-active {
+    border-color: var(--tp-theme-primary);
+
+    span {
+      background-color: var(--tp-theme-primary);
+      color: var(--tp-common-white);
+    }
+
+    p {
+      color: var(--tp-common-black);
+      font-weight: 600;
+    }
+  }
+}
+
+.nees-quote-form {
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    border: 1px solid rgba(1, 15, 28, 0.16);
+    border-radius: 8px;
+    padding: 11px 12px;
+    font-size: 14px;
+    color: var(--tp-common-black);
+    background-color: var(--tp-common-white);
+
+    &:focus {
+      outline: none;
+      border-color: var(--tp-theme-primary);
+    }
+  }
+
+  textarea {
+    min-height: 110px;
+    resize: vertical;
+  }
+}
+
+.nees-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-weight: 400;
+
+  input {
+    width: auto;
+    margin-top: 3px;
+  }
+}
+
+.nees-quote-form-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+
+  .nees-btn[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.nees-form-page {
+  background-color: #f8fbfd;
+}
+
+.nees-prof-listing {
+  background:
+    radial-gradient(circle at 10% 15%, rgba(9, 137, 255, 0.08), transparent 35%),
+    linear-gradient(180deg, #f9fbff 0%, #ffffff 100%);
+}
+
+.nees-prof-card {
+  background-color: var(--tp-common-white);
+  border: 1px solid rgba(1, 15, 28, 0.1);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.nees-prof-card-media {
+  position: relative;
+  padding: 18px;
+  background-color: #f7fafc;
+
+  img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+}
+
+.nees-prof-badge {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 100px;
+  background: var(--tp-common-black);
+  color: var(--tp-common-white);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 6px 11px;
+}
+
+.nees-prof-card-content {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  h3 {
+    font-size: 24px;
+    line-height: 1.2;
+    margin-bottom: 0;
+  }
+
+  p {
+    margin-bottom: 0;
+    color: var(--tp-text-1);
+  }
+}
+
+.nees-prof-brand {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tp-theme-primary);
+  margin-bottom: 0;
+}
+
+.nees-prof-trust-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  span {
+    font-size: 12px;
+    color: var(--tp-common-black);
+    border: 1px solid rgba(1, 15, 28, 0.12);
+    border-radius: 999px;
+    padding: 5px 10px;
+  }
+}
+
+.nees-prof-detail {
+  background:
+    radial-gradient(circle at 88% 18%, rgba(9, 137, 255, 0.08), transparent 30%),
+    linear-gradient(180deg, #f8fbfd 0%, #ffffff 100%);
+}
+
+.nees-prof-detail-media {
+  position: relative;
+  border: 1px solid rgba(1, 15, 28, 0.08);
+  border-radius: 14px;
+  padding: 20px;
+  background-color: var(--tp-common-white);
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+}
+
+.nees-prof-detail-content {
+  h1 {
+    font-size: 40px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+
+  p {
+    color: var(--tp-text-1);
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+}
+
+.nees-prof-meta-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+
+  article {
+    border: 1px solid rgba(1, 15, 28, 0.1);
+    border-radius: 10px;
+    background-color: #f7fafc;
+    padding: 14px;
+
+    h4 {
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
+
+    p {
+      margin-bottom: 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+}
+
+.nees-prof-disclaimer {
+  border: 1px solid rgba(1, 15, 28, 0.12);
+  border-left: 4px solid var(--tp-theme-primary);
+  border-radius: 10px;
+  background-color: #f4f8ff;
+  padding: 14px 16px;
+  margin-top: 14px;
+
+  h4 {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  p {
+    margin-bottom: 0;
+    color: var(--tp-text-1);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  &.is-compact {
+    padding: 12px 14px;
+
+    h4 {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.nees-inquiry-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.nees-inquiry-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(1, 15, 28, 0.14);
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: var(--tp-common-black);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+
+  &:hover {
+    color: var(--tp-theme-primary);
+    border-color: var(--tp-theme-primary);
+  }
+}
+
+@media #{$sm, $xs} {
+  .nees-gateway-card,
+  .nees-b2b-panel,
+  .nees-quote-form-wrap,
+  .nees-device-card,
+  .nees-device-section {
+    padding: 18px;
+  }
+
+  .nees-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+
+    .nees-btn {
+      width: 100%;
+    }
+  }
+
+  .nees-prof-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nees-prof-detail-content {
+    h1 {
+      font-size: 30px;
+    }
+  }
+}

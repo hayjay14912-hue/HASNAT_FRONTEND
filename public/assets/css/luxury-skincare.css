@@ -1,0 +1,386 @@
+/* Luxury Skincare Section - Premium Refresh */
+.tp-luxury-skincare-area {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 22%, rgba(9, 137, 255, 0.12), transparent 36%),
+    radial-gradient(circle at 88% 80%, rgba(255, 180, 120, 0.14), transparent 34%),
+    linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+}
+
+.tp-luxury-bg-shape {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(48px);
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.tp-luxury-bg-shape-1 {
+  width: 240px;
+  height: 240px;
+  top: 8%;
+  left: -80px;
+  background: rgba(9, 137, 255, 0.45);
+}
+
+.tp-luxury-bg-shape-2 {
+  width: 280px;
+  height: 280px;
+  right: -100px;
+  bottom: 8%;
+  background: rgba(255, 177, 107, 0.4);
+}
+
+.tp-luxury-head {
+  position: relative;
+  z-index: 2;
+}
+
+.tp-luxury-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(9, 137, 255, 0.12);
+  color: var(--tp-theme-primary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.tp-luxury-heading {
+  margin-bottom: 16px;
+  color: #101828;
+  font-size: 54px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.tp-luxury-description {
+  margin: 0 auto;
+  max-width: 740px;
+  color: #475467;
+  font-size: 20px;
+  line-height: 1.65;
+}
+
+.tp-luxury-card {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  border: 1px solid rgba(16, 24, 40, 0.08);
+  border-radius: 22px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 18px 38px rgba(16, 24, 40, 0.07);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.tp-luxury-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 52px rgba(16, 24, 40, 0.14);
+  border-color: rgba(9, 137, 255, 0.28);
+}
+
+.tp-luxury-card-media {
+  position: relative;
+  min-height: 290px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px 24px;
+  background:
+    radial-gradient(circle at 26% 20%, rgba(9, 137, 255, 0.2), transparent 45%),
+    radial-gradient(circle at 80% 84%, rgba(16, 24, 40, 0.09), transparent 38%),
+    linear-gradient(140deg, #eef6ff 0%, #f7fbff 100%);
+}
+
+.tp-luxury-card.tone-clinical .tp-luxury-card-media {
+  background:
+    radial-gradient(circle at 70% 28%, rgba(42, 101, 255, 0.2), transparent 44%),
+    radial-gradient(circle at 18% 86%, rgba(16, 24, 40, 0.11), transparent 40%),
+    linear-gradient(145deg, #eef3ff 0%, #f9fbff 100%);
+}
+
+.tp-luxury-card.tone-organic .tp-luxury-card-media {
+  background:
+    radial-gradient(circle at 24% 24%, rgba(24, 178, 121, 0.2), transparent 44%),
+    radial-gradient(circle at 82% 76%, rgba(105, 160, 105, 0.18), transparent 40%),
+    linear-gradient(145deg, #effbf3 0%, #f8fffb 100%);
+}
+
+.tp-luxury-image {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.35s ease;
+}
+
+.tp-luxury-card:hover .tp-luxury-image {
+  transform: scale(1.06);
+}
+
+.tp-luxury-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 3;
+}
+
+.badge-text {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: linear-gradient(140deg, #0989ff 0%, #0565c1 100%);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 22px rgba(9, 137, 255, 0.35);
+}
+
+.tp-luxury-card.tone-organic .badge-text {
+  background: linear-gradient(140deg, #13a56b 0%, #0b7b50 100%);
+  box-shadow: 0 8px 22px rgba(19, 165, 107, 0.32);
+}
+
+.tp-luxury-card-content {
+  padding: 24px;
+}
+
+.tp-luxury-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.tp-luxury-brand-name {
+  color: #0b6dcb;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tp-luxury-card.tone-organic .tp-luxury-brand-name {
+  color: #0d8356;
+}
+
+.tp-luxury-category-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(16, 24, 40, 0.14);
+  padding: 4px 10px;
+  color: #475467;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tp-luxury-card-title {
+  margin-bottom: 12px;
+  font-size: 29px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.tp-luxury-card-title a {
+  color: #101828;
+  transition: color 0.3s ease;
+}
+
+.tp-luxury-card-title a:hover {
+  color: var(--tp-theme-primary);
+}
+
+.tp-luxury-card-subtitle {
+  min-height: 82px;
+  margin-bottom: 16px;
+  color: #475467;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.tp-luxury-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.feature-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(16, 24, 40, 0.12);
+  background: #f8fafc;
+  padding: 6px 11px;
+  color: #344054;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tp-luxury-cta-panel {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  border-radius: 24px;
+  padding: 34px;
+  background:
+    linear-gradient(135deg, #0c1f3b 0%, #12305a 52%, #0b4f87 100%);
+  box-shadow: 0 24px 56px rgba(11, 36, 69, 0.28);
+}
+
+.tp-luxury-cta-copy {
+  max-width: 68%;
+}
+
+.tp-luxury-cta-title {
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-size: 44px;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.tp-luxury-cta-description {
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.tp-luxury-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  min-width: 248px;
+  padding: 16px 30px;
+  background: linear-gradient(140deg, #3ec7ff 0%, #1da3ff 52%, #0878ff 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 16px 30px rgba(24, 129, 255, 0.45);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.tp-luxury-cta-btn:hover {
+  color: #ffffff;
+  filter: brightness(1.06);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 34px rgba(24, 129, 255, 0.5);
+}
+
+@media (max-width: 1199px) {
+  .tp-luxury-heading {
+    font-size: 46px;
+  }
+
+  .tp-luxury-card-title {
+    font-size: 26px;
+  }
+
+  .tp-luxury-cta-title {
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 991px) {
+  .tp-luxury-heading {
+    font-size: 38px;
+  }
+
+  .tp-luxury-description {
+    font-size: 18px;
+  }
+
+  .tp-luxury-card-subtitle {
+    min-height: 0;
+    font-size: 16px;
+  }
+
+  .tp-luxury-cta-panel {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px 24px;
+  }
+
+  .tp-luxury-cta-copy {
+    max-width: 100%;
+  }
+
+  .tp-luxury-cta-title {
+    font-size: 34px;
+  }
+
+  .tp-luxury-cta-btn {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .tp-luxury-skincare-area {
+    background:
+      radial-gradient(circle at 8% 18%, rgba(9, 137, 255, 0.14), transparent 40%),
+      linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+  }
+
+  .tp-luxury-heading {
+    font-size: 30px;
+  }
+
+  .tp-luxury-description {
+    font-size: 16px;
+  }
+
+  .tp-luxury-card {
+    border-radius: 18px;
+  }
+
+  .tp-luxury-card-media {
+    min-height: 250px;
+    padding: 34px 18px 18px;
+  }
+
+  .tp-luxury-card-content {
+    padding: 18px;
+  }
+
+  .tp-luxury-card-title {
+    font-size: 24px;
+  }
+
+  .tp-luxury-cta-panel {
+    border-radius: 18px;
+    padding: 24px 16px;
+  }
+
+  .tp-luxury-cta-title {
+    font-size: 28px;
+  }
+
+  .tp-luxury-cta-description {
+    font-size: 16px;
+  }
+
+  .tp-luxury-cta-btn {
+    padding: 15px 20px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+  }
+}

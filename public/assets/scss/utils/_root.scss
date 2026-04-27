@@ -1,0 +1,29 @@
+@use 'colors' as *;
+@use 'typography' as *;
+
+:root {
+    /* Local-first font stacks to avoid remote font outages. */
+    --font-manrope: "SF Pro Text", "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-jost: "SF Pro Text", "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-roboto: "SF Pro Text", "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-cormorant: "Didot", "Bodoni 72", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Garamond, Georgia, serif;
+
+    /**
+    @font family declaration
+    */
+    @each $ff, $shades in $font-family {
+        @each $shade, $value in $shades {
+            --tp-#{$ff}-#{$shade}: #{$value};
+        }
+    }
+
+    /**
+    @color declaration
+    */
+    @each $color, $shades in $colors {
+        @each $shade, $value in $shades {
+            --tp-#{$color}-#{$shade}: #{$value};
+        }
+    }
+
+}

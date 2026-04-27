@@ -1,0 +1,24 @@
+
+// font family
+$font-family: (
+    'ff': (
+        'body': "var(--font-manrope, 'SF Pro Text', 'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial), sans-serif",
+        'heading': "var(--font-cormorant, 'Didot', 'Bodoni 72', 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Garamond, Georgia), serif",
+        'p': "var(--font-manrope, 'SF Pro Text', 'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial), sans-serif",
+        'jost': "var(--font-jost, 'SF Pro Text', 'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial), sans-serif",
+        'fontawesome': '"Font Awesome 6 Pro"',
+        'roboto': "var(--font-roboto, 'SF Pro Text', 'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial), sans-serif",
+        'oregano': "'Oregano', cursive",
+        'charm': "'Charm', cursive",
+    )
+);
+
+
+
+// font size
+$font-size: (
+    'fz': (
+        'body': 14px,
+        'p': 14px,
+    )
+);
