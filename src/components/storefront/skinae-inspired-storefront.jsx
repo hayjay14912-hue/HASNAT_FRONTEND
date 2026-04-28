@@ -59,31 +59,31 @@ const TREATMENT_TILES = [
     title: "Skin Boosters",
     caption: "Hydration, glow and elasticity formulas",
     image:
-      "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&w=900&q=80",
+      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1777043049/bsv2pup3qxr9ikopwwja.png",
   },
   {
     title: "Dermal Fillers",
     caption: "Premium contouring and volume products",
     image:
-      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
+      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1777043062/nyyca2lwc2xswn0kukfb.png",
   },
   {
     title: "Exosomes",
     caption: "Skin and scalp recovery essentials",
     image:
-      "https://images.unsplash.com/photo-1556229174-5e42a09e45af?auto=format&fit=crop&w=900&q=80",
+      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1771617423/zadz9gnf27n3h63sw61v.png",
   },
   {
     title: "Meso Serums",
     caption: "Tone, acne, anti-aging and firming care",
     image:
-      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=900&q=80",
+      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1777043066/rru4mg0j3997dbl2ogpe.png",
   },
   {
     title: "Chemical Peels",
     caption: "Acne, spots and texture treatments",
     image:
-      "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=900&q=80",
+      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1771067912/sevbznmdjdwxvkw5w3ov.png",
   },
   {
     title: "Devices and Tools",
