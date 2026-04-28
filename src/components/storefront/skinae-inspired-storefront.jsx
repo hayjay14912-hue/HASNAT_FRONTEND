@@ -95,17 +95,27 @@ const PRODUCT_RAILS = [
   {
     title: "Top Selling Exosomes",
     subtitle: "Regenerative exosome and scalp-support products",
-    keywords: ["exo", "exosome", "pdrn", "scalp", "asce"],
+    category: "Exosomes",
   },
   {
     title: "Best Injectables",
     subtitle: "High-demand injectable treatments and ampoules",
-    keywords: ["inject", "unit", "tox", "botulax", "lipolytic", "ampoule"],
+    category: "Injectables",
   },
   {
     title: "BB Glow and Peels",
     subtitle: "Glow protocols and chemical peel solutions",
-    keywords: ["bb glow", "peel", "aha", "bha", "glow", "bright"],
+    category: "BB Glow Treatment",
+  },
+  {
+    title: "Chemical Peel Protocols",
+    subtitle: "Acid peels and clinical resurfacing products",
+    category: "Chemical Peels",
+  },
+  {
+    title: "Filler Essentials",
+    subtitle: "Contouring and volume-focused filler products",
+    category: "Fillers",
   },
 ];
 
@@ -150,15 +160,38 @@ const getImage = (product) =>
 const getCategoryLabel = (product) =>
   product?.children || product?.category?.name || product?.parent || "Skin Aesthetics";
 
-const pickRailProducts = (products, keywords) => {
-  const matches = products.filter((product) => {
-    const searchText = getSearchText(product);
-    return keywords.some((keyword) => searchText.includes(keyword));
-  });
+const normalizeCategoryKey = (value = "") =>
+  String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+const CATEGORY_ALIASES = {
+  [normalizeCategoryKey("Exosomes")]: [normalizeCategoryKey("Exosomes"), normalizeCategoryKey("Exosome")],
+  [normalizeCategoryKey("Injectables")]: [normalizeCategoryKey("Injectables"), normalizeCategoryKey("Injectable")],
+  [normalizeCategoryKey("Chemical Peels")]: [normalizeCategoryKey("Chemical Peels"), normalizeCategoryKey("Chemical Peel"), normalizeCategoryKey("Peels")],
+  [normalizeCategoryKey("Fillers")]: [normalizeCategoryKey("Fillers"), normalizeCategoryKey("Filler")],
+  [normalizeCategoryKey("Permanent Makeup")]: [normalizeCategoryKey("Permanent Makeup"), normalizeCategoryKey("PMU")],
+  [normalizeCategoryKey("BB Glow Treatment")]: [normalizeCategoryKey("BB Glow Treatment"), normalizeCategoryKey("BB Glow"), normalizeCategoryKey("Glow Treatment")],
+};
+
+const matchesCategory = (product, categoryName) => {
+  const productCategory = normalizeCategoryKey(getCategoryLabel(product));
+  const target = normalizeCategoryKey(categoryName);
+  if (!target) return false;
+  const aliases = CATEGORY_ALIASES[target] || [target];
+  return aliases.includes(productCategory);
+};
+
+const pickRailProducts = (products, categoryName) => {
+  const matches = products.filter((product) => matchesCategory(product, categoryName));
 
   const fallback = matches.length >= 4 ? matches : [...matches, ...products];
   const unique = new Map();
   fallback.forEach((product) => {
+    if (!matchesCategory(product, categoryName)) return;
     if (product?._id && !unique.has(product._id)) {
       unique.set(product._id, product);
     }
@@ -230,7 +263,7 @@ const SkinaeInspiredStorefront = ({ mode = "home", initialProducts = [] }) => {
     () =>
       PRODUCT_RAILS.map((rail) => ({
         ...rail,
-        products: pickRailProducts(productPool, rail.keywords),
+        products: pickRailProducts(productPool, rail.category),
       })).filter((rail) => rail.products.length > 0),
     [productPool]
   );
@@ -238,7 +271,7 @@ const SkinaeInspiredStorefront = ({ mode = "home", initialProducts = [] }) => {
   const filteredProducts = useMemo(() => {
     const normalizedSearch = String(searchTerm || "").trim().toLowerCase();
     let items = productPool.filter((product) => {
-      if (activeCategory !== "All" && getCategoryLabel(product) !== activeCategory) {
+      if (activeCategory !== "All" && !matchesCategory(product, activeCategory)) {
         return false;
       }
       if (!normalizedSearch) {
@@ -274,8 +307,8 @@ const SkinaeInspiredStorefront = ({ mode = "home", initialProducts = [] }) => {
   };
 
   const handleNavSearch = (category) => {
-    setActiveCategory("All");
-    setSearchTerm(category);
+    setActiveCategory(category);
+    setSearchTerm("");
   };
 
   return (
@@ -422,7 +455,13 @@ const SkinaeInspiredStorefront = ({ mode = "home", initialProducts = [] }) => {
                   <p>{rail.subtitle}</p>
                   <h2>{rail.title}</h2>
                 </div>
-                <button type="button" onClick={() => setSearchTerm(rail.keywords[0])}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveCategory(rail.category);
+                    setSearchTerm("");
+                  }}
+                >
                   View all
                 </button>
               </div>
