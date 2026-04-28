@@ -8,14 +8,12 @@ import { buildProductPath } from "@/utils/seo-utils";
 import styles from "@/styles/skinae-inspired-storefront.module.css";
 
 const NAV_CATEGORIES = [
-  "Microneedling",
-  "Meso Serums",
-  "BB Glow",
-  "Skin Care",
-  "Chemical Peels",
   "Exosomes",
+  "Injectables",
+  "Chemical Peels",
   "Fillers",
-  "Tools & Devices",
+  "Permanent Makeup",
+  "BB Glow Treatment",
 ];
 
 const BRAND_HIGHLIGHTS = [
@@ -56,58 +54,58 @@ const PROMO_BANNERS = [
 
 const TREATMENT_TILES = [
   {
-    title: "Skin Boosters",
-    caption: "Hydration, glow and elasticity formulas",
-    image:
-      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1777043049/bsv2pup3qxr9ikopwwja.png",
-  },
-  {
-    title: "Dermal Fillers",
-    caption: "Premium contouring and volume products",
-    image:
-      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1777043062/nyyca2lwc2xswn0kukfb.png",
-  },
-  {
     title: "Exosomes",
-    caption: "Skin and scalp recovery essentials",
+    caption: "Regenerative scalp and skin support formulas",
     image:
       "https://res.cloudinary.com/dvfjsntz8/image/upload/v1771617423/zadz9gnf27n3h63sw61v.png",
   },
   {
-    title: "Meso Serums",
-    caption: "Tone, acne, anti-aging and firming care",
+    title: "Injectables",
+    caption: "Clinic-use injectable and treatment ampoule range",
     image:
-      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1777043066/rru4mg0j3997dbl2ogpe.png",
+      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1777043062/nyyca2lwc2xswn0kukfb.png",
   },
   {
     title: "Chemical Peels",
-    caption: "Acne, spots and texture treatments",
+    caption: "Texture, acne, and pigmentation peel protocols",
     image:
       "https://res.cloudinary.com/dvfjsntz8/image/upload/v1771067912/sevbznmdjdwxvkw5w3ov.png",
   },
   {
-    title: "Devices and Tools",
-    caption: "Microneedling pens, rollers and essentials",
+    title: "Fillers",
+    caption: "Volume, contouring, and structural support products",
     image:
-      "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=900&q=80",
+      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1777043062/nyyca2lwc2xswn0kukfb.png",
+  },
+  {
+    title: "Permanent Makeup",
+    caption: "PMU essentials, pigments, and procedure support",
+    image:
+      "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    title: "BB Glow Treatment",
+    caption: "Brightening and glow-focused treatment products",
+    image:
+      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1777043049/bsv2pup3qxr9ikopwwja.png",
   },
 ];
 
 const PRODUCT_RAILS = [
   {
-    title: "Best Meso Serums",
-    subtitle: "Brightening, pigmentation and anti-aging formulas",
-    keywords: ["meso", "serum", "ampoule", "tranex", "peptide", "acne", "bsk"],
-  },
-  {
     title: "Top Selling Exosomes",
-    subtitle: "Skin and hair recovery essentials",
-    keywords: ["exo", "exosome", "pdrn", "scalp", "hair"],
+    subtitle: "Regenerative exosome and scalp-support products",
+    keywords: ["exo", "exosome", "pdrn", "scalp", "asce"],
   },
   {
-    title: "Fillers and Injectables",
-    subtitle: "Aesthetic treatment products in one place",
-    keywords: ["filler", "inject", "skin booster", "booster", "botox", "thread"],
+    title: "Best Injectables",
+    subtitle: "High-demand injectable treatments and ampoules",
+    keywords: ["inject", "unit", "tox", "botulax", "lipolytic", "ampoule"],
+  },
+  {
+    title: "BB Glow and Peels",
+    subtitle: "Glow protocols and chemical peel solutions",
+    keywords: ["bb glow", "peel", "aha", "bha", "glow", "bright"],
   },
 ];
 
@@ -150,7 +148,7 @@ const getImage = (product) =>
   "https://res.cloudinary.com/dvfjsntz8/image/upload/v1773684890/ptt8lk2ofzmc4vbzpc3l.jpg";
 
 const getCategoryLabel = (product) =>
-  product?.parent || product?.category?.name || "Skin Aesthetics";
+  product?.children || product?.category?.name || product?.parent || "Skin Aesthetics";
 
 const pickRailProducts = (products, keywords) => {
   const matches = products.filter((product) => {

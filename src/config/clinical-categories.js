@@ -5,11 +5,8 @@ export const CLINICAL_CATEGORY_ORDER = [
   "Injectables",
   "Chemical Peels",
   "Fillers",
-  "Meso Serums",
-  "Skin Boosters",
-  "Threads",
-  "Devices and Tools",
-  "Premium Products",
+  "Permanent Makeup",
+  "BB Glow Treatment",
 ];
 
 export const CLINICAL_CATEGORY_MENU = [
