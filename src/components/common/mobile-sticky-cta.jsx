@@ -1,16 +1,20 @@
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const MobileStickyCta = () => {
+  const { cart_products } = useSelector((state) => state.cart);
+  const { wishlist } = useSelector((state) => state.wishlist);
+
   return (
     <div className="aura-mobile-sticky-cta" role="region" aria-label="Quick actions">
       <Link href="/shop" className="aura-mobile-sticky-btn is-retail">
-        Shop Retail
+        Shop All
       </Link>
-      <Link href="/medical-devices" className="aura-mobile-sticky-btn is-machines">
-        Machines
+      <Link href="/wishlist" className="aura-mobile-sticky-btn is-machines">
+        Wishlist ({wishlist?.length || 0})
       </Link>
-      <Link href="/professional" className="aura-mobile-sticky-btn is-b2b">
-        Clinics
+      <Link href="/cart" className="aura-mobile-sticky-btn is-b2b">
+        Cart ({cart_products?.length || 0})
       </Link>
     </div>
   );

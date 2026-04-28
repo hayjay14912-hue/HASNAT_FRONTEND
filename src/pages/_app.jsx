@@ -2,14 +2,22 @@ import store from "@/redux/store";
 import { Provider } from "react-redux";
 import ReactModal from "react-modal";
 import { useEffect } from "react";
-import { Inter } from "next/font/google";
+import { Manrope, Playfair_Display } from "next/font/google";
 import "../styles/index.scss";
 import "../../public/assets/css/luxury-skincare.css";
 import "../../public/assets/css/aura-ux-refresh.css";
 
-const inter = Inter({
+const displayFont = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["600", "700", "800"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const bodyFont = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -63,7 +71,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <div id="root" className={`app-root ${inter.className}`}>
+      <div id="root" className={`app-root ${bodyFont.className} ${bodyFont.variable} ${displayFont.variable}`}>
         <Component {...pageProps} />
       </div>
     </Provider>
