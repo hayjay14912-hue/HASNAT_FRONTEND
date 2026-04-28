@@ -1,10 +1,15 @@
 import { toSlug } from "@/utils/slug";
 
 export const CLINICAL_CATEGORY_ORDER = [
-  "Filler",
-  "Booster",
+  "Exosomes",
+  "Injectables",
+  "Chemical Peels",
+  "Fillers",
+  "Meso Serums",
+  "Skin Boosters",
+  "Threads",
+  "Devices and Tools",
   "Premium Products",
-  "Thread",
 ];
 
 export const CLINICAL_CATEGORY_MENU = [
