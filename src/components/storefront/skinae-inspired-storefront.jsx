@@ -39,7 +39,7 @@ const PROMO_BANNERS = [
     title: "Exosomes and PDRN",
     subtitle: "Premium recovery, glow and scalp support formulas.",
     image:
-      "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=1200&q=85",
+      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1771617423/zadz9gnf27n3h63sw61v.png",
     cta: "Explore Exosomes",
     href: "/shop",
   },
@@ -48,7 +48,7 @@ const PROMO_BANNERS = [
     title: "Fillers, Threads and Boosters",
     subtitle: "A curated injectable aesthetic product range in one storefront.",
     image:
-      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1200&q=85",
+      "https://res.cloudinary.com/dvfjsntz8/image/upload/v1777043062/nyyca2lwc2xswn0kukfb.png",
     cta: "View Range",
     href: "/shop",
   },
