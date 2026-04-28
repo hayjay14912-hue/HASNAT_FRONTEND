@@ -160,9 +160,21 @@ header + .tp-slider-area.aura-hero-area {
   letter-spacing: 0.07em;
 }
 
+.aura-logo-wordmark-nav {
+  font-size: 34px;
+  letter-spacing: 0.06em;
+}
+
 .aura-header-wrap .logo a:hover .aura-logo-wordmark,
 .tp-header-bottom-2 .logo a:hover .aura-logo-wordmark {
   color: #101722;
+}
+
+.tp-header-bottom-2 .logo .aura-logo-wordmark,
+.tp-header-main .logo .aura-logo-wordmark,
+.tp-header-sticky-area .logo .aura-logo-wordmark {
+  font-size: 34px;
+  letter-spacing: 0.06em;
 }
 
 .aura-header-wrap .logo img {
@@ -202,6 +214,17 @@ header + .tp-slider-area.aura-hero-area {
 }
 
 @media (max-width: 768px) {
+  .aura-logo-wordmark {
+    font-size: 32px;
+  }
+
+  .aura-logo-wordmark-nav,
+  .tp-header-bottom-2 .logo .aura-logo-wordmark,
+  .tp-header-main .logo .aura-logo-wordmark,
+  .tp-header-sticky-area .logo .aura-logo-wordmark {
+    font-size: 28px;
+  }
+
   .aura-header-wrap .logo img.aura-brand-logo {
     height: 54px;
     width: 54px;
@@ -216,6 +239,18 @@ header + .tp-slider-area.aura-hero-area {
 }
 
 @media (max-width: 576px) {
+  .aura-logo-wordmark {
+    font-size: 28px;
+  }
+
+  .aura-logo-wordmark-nav,
+  .tp-header-bottom-2 .logo .aura-logo-wordmark,
+  .tp-header-main .logo .aura-logo-wordmark,
+  .tp-header-sticky-area .logo .aura-logo-wordmark {
+    font-size: 24px;
+    letter-spacing: 0.05em;
+  }
+
   .aura-header-wrap .logo img.aura-brand-logo {
     height: 46px;
     width: 46px;
@@ -503,6 +538,11 @@ header + .tp-slider-area.aura-hero-area {
   width: 64px;
 }
 
+.tp-footer-logo .aura-logo-wordmark-footer {
+  font-size: 32px;
+  letter-spacing: 0.06em;
+}
+
 @media (max-width: 576px) {
   .tp-footer-logo img {
     height: 36px;
@@ -511,6 +551,10 @@ header + .tp-slider-area.aura-hero-area {
   .tp-footer-logo img.aura-brand-logo {
     height: 56px;
     width: 56px;
+  }
+
+  .tp-footer-logo .aura-logo-wordmark-footer {
+    font-size: 26px;
   }
 }
 

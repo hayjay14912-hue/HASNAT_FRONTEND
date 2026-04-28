@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import Image from 'next/image';
 import dynamic from "next/dynamic";
 // internal
 import Menus from './header-com/menus';
@@ -12,7 +11,6 @@ import HeaderTopRight from './header-com/header-top-right';
 import { CartTwo, Compare, Facebook, Menu, PhoneTwo, Wishlist, Search } from '@/svg';
 import useSearchFormSubmit from '@/hooks/use-search-form-submit';
 import AnnouncementBar from './header-com/announcement-bar';
-import brand_logo from '@assets/img/logo/brand-logo-compact.png';
 
 const CartMiniSidebar = dynamic(() => import("@/components/common/cart-mini-sidebar"), {
   ssr: false,
@@ -20,8 +18,6 @@ const CartMiniSidebar = dynamic(() => import("@/components/common/cart-mini-side
 const OffCanvas = dynamic(() => import("@/components/common/off-canvas"), {
   ssr: false,
 });
-
-const HEADER_LOGO_SIZES = "(max-width: 576px) 42px, (max-width: 768px) 48px, 72px";
 
 const HeaderTwo = ({ style_2 = false }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
@@ -88,22 +84,13 @@ const HeaderTwo = ({ style_2 = false }) => {
             <div className="container">
               <div className="tp-mega-menu-wrapper p-relative">
                 <div className="row align-items-center">
-	                  <div className="col-xl-2 col-lg-5 col-md-5 col-sm-4 col-6">
-	                    <div className="logo">
-	                      <Link href="/">
-	                        <Image
-                            className="aura-brand-logo"
-                            src={brand_logo}
-                            alt="HASNAT logo"
-                            width={72}
-                            height={72}
-                            sizes={HEADER_LOGO_SIZES}
-                            priority
-                            fetchPriority="high"
-                          />
-	                      </Link>
-	                    </div>
-	                  </div>
+		                  <div className="col-xl-2 col-lg-5 col-md-5 col-sm-4 col-6">
+		                    <div className="logo">
+		                      <Link href="/">
+                            <span className="aura-logo-wordmark aura-logo-wordmark-nav">HASNAT</span>
+		                      </Link>
+		                    </div>
+		                  </div>
                   <div className="col-xl-5 d-none d-xl-block">
                     <div className="main-menu menu-style-2">
                       <nav className="tp-main-menu-content">

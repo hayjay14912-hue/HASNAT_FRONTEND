@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
 // internal
 import Menus from "./header-com/menus";
 import useSticky from "@/hooks/use-sticky";
-import brand_logo from "@assets/img/logo/brand-logo-compact.png";
 import useCartInfo from "@/hooks/use-cart-info";
 import { openCartMini } from "@/redux/features/cartSlice";
 import HeaderCategory from "./header-com/header-category";
@@ -17,8 +15,6 @@ import { CartTwo, CategoryMenu, Compare, Menu, Phone, ShippingCar, Wishlist } fr
 
 const OffCanvas = dynamic(() => import("@/components/common/off-canvas"), { ssr: false });
 const CartMiniSidebar = dynamic(() => import("@/components/common/cart-mini-sidebar"), { ssr: false });
-
-const HEADER_LOGO_SIZES = "(max-width: 576px) 42px, (max-width: 768px) 48px, 72px";
 
 const Header = () => {
   const { wishlist } = useSelector((state) => state.wishlist);
@@ -60,16 +56,7 @@ const Header = () => {
                 <div className="col-xl-2 col-lg-2 col-md-4 col-6">
                   <div className="logo">
                     <Link href="/">
-                      <Image
-                        className="aura-brand-logo"
-                        src={brand_logo}
-                        alt="NEES Medical Inc logo"
-                        width={72}
-                        height={72}
-                        sizes={HEADER_LOGO_SIZES}
-                        priority
-                        fetchPriority="high"
-                      />
+                      <span className="aura-logo-wordmark aura-logo-wordmark-nav">HASNAT</span>
                     </Link>
                   </div>
                 </div>
@@ -145,14 +132,7 @@ const Header = () => {
               <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                 <div className="logo">
                   <Link href="/">
-                    <Image
-                      className="aura-brand-logo"
-                      src={brand_logo}
-                      alt="NEES Medical Inc logo"
-                      width={72}
-                      height={72}
-                      sizes={HEADER_LOGO_SIZES}
-                    />
+                    <span className="aura-logo-wordmark aura-logo-wordmark-nav">HASNAT</span>
                   </Link>
                 </div>
               </div>

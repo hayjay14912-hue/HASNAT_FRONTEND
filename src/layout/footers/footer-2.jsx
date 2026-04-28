@@ -5,7 +5,6 @@ import Link from 'next/link';
 import social_data from '@/data/social-data';
 import { Email, Location } from '@/svg';
 import pay from '@assets/img/footer/footer-pay.png';
-import brand_logo from '@assets/img/logo/brand-logo-compact.png';
 
 const FooterTwo = () => {
   return (
@@ -17,18 +16,11 @@ const FooterTwo = () => {
               <div className="row">
                 <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
 	                  <div className="tp-footer-widget footer-col-4-1 mb-50">
-	                    <div className="tp-footer-logo">
-	                      <Link href="/">
-	                        <Image
-                            className="aura-brand-logo"
-                            src={brand_logo}
-                            alt="NEES Medical Inc logo"
-                            width={72}
-                            height={72}
-                            sizes="(max-width: 768px) 52px, 72px"
-                          />
-	                      </Link>
-	                    </div>
+		                    <div className="tp-footer-logo">
+		                      <Link href="/">
+                            <span className="aura-logo-wordmark aura-logo-wordmark-footer">HASNAT</span>
+		                      </Link>
+		                    </div>
 	                    <div className="tp-footer-widget-content">
 	                      <div className="tp-footer-talk mb-20">
 	                        <span>Got Questions? Call us</span>

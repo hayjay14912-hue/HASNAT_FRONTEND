@@ -5,7 +5,6 @@ import Link from 'next/link';
 import pay from '@assets/img/footer/footer-pay.png';
 import social_data from '@/data/social-data';
 import { Email, Location } from '@/svg';
-import brand_logo from '@assets/img/logo/brand-logo-compact.png';
 
 const Footer = ({ style_2 = false, style_3 = false,primary_style=false }) => {
   return (
@@ -18,18 +17,11 @@ const Footer = ({ style_2 = false, style_3 = false,primary_style=false }) => {
               <div className="col-xl-4 col-lg-3 col-md-4 col-sm-6">
                 <div className="tp-footer-widget footer-col-1 mb-50">
 	                  <div className="tp-footer-widget-content">
-	                    <div className="tp-footer-logo">
-	                      <Link href="/">
-	                        <Image
-	                          className="aura-brand-logo"
-	                          src={brand_logo}
-	                          alt="HASNAT logo"
-                            width={72}
-                            height={72}
-                            sizes="(max-width: 768px) 52px, 72px"
-	                        />
-	                      </Link>
-	                    </div>
+		                    <div className="tp-footer-logo">
+		                      <Link href="/">
+                                <span className="aura-logo-wordmark aura-logo-wordmark-footer">HASNAT</span>
+		                      </Link>
+		                    </div>
 	                    <p className="tp-footer-desc">
 	                      Premium skincare and aesthetic solutions with easy online shopping across all product categories.
 	                    </p>

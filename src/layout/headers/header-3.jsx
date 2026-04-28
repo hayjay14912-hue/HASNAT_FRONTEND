@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
-import Image from 'next/image';
 import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from 'react-redux';
 // internal
 import { CartTwo, Menu, Search, Wishlist } from '@/svg';
 import Menus from './header-com/menus';
-import brand_logo from '@assets/img/logo/brand-logo-compact.png';
 import useSticky from '@/hooks/use-sticky';
 import useCartInfo from '@/hooks/use-cart-info';
 import { openCartMini } from '@/redux/features/cartSlice';
@@ -15,8 +13,6 @@ import AnnouncementBar from './header-com/announcement-bar';
 const SearchBar = dynamic(() => import("./header-com/search-bar"), { ssr: false });
 const OffCanvas = dynamic(() => import("@/components/common/off-canvas"), { ssr: false });
 const CartMiniSidebar = dynamic(() => import("@/components/common/cart-mini-sidebar"), { ssr: false });
-
-const HEADER_LOGO_SIZES = "(max-width: 576px) 46px, (max-width: 768px) 54px, 80px";
 
 const HeaderThree = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -37,16 +33,7 @@ const HeaderThree = () => {
                 <div className="col-xl-3 col-lg-3 col-6">
                   <div className="logo">
                     <Link href="/">
-                      <Image
-                        className="aura-brand-logo"
-                        src={brand_logo}
-                        alt="HASNAT logo"
-                        width={80}
-                        height={80}
-                        sizes={HEADER_LOGO_SIZES}
-                        priority
-                        fetchPriority="high"
-                      />
+                      <span className="aura-logo-wordmark">HASNAT</span>
                     </Link>
                   </div>
                 </div>

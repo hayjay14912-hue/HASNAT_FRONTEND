@@ -16,7 +16,7 @@ const OffCanvas = ({ isOffCanvasOpen, setIsCanvasOpen }) => {
           <div className="offcanvas__content">
             <div className="aura-mobile-drawer">
               <div className="aura-mobile-drawer-head">
-                <span className="aura-mobile-drawer-kicker">NEES Medical</span>
+                <span className="aura-mobile-drawer-kicker">HASNAT</span>
                 <h2>Browse</h2>
                 <p>Retail skincare, machines, clinic access, and support in one place.</p>
               </div>
