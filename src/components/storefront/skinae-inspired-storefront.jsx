@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
 import { useGetAllProductsQuery } from "@/redux/features/productApi";
 import { add_cart_product } from "@/redux/features/cartSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
@@ -16,11 +17,11 @@ const NAV_CATEGORIES = [
   "BB Glow Treatment",
 ];
 
-const BRAND_HIGHLIGHTS = [
-  { label: "Authentic range", value: "Professional stock" },
-  { label: "Dispatch", value: "Lahore support" },
-  { label: "Catalog", value: "53+ products" },
-];
+const HERO_VIDEO = {
+  src: "https://cdn.coverr.co/videos/coverr-applying-face-serum-1565/1080p.mp4",
+  fallback:
+    "https://images.unsplash.com/photo-1571781418606-70265b9cce90?auto=format&fit=crop&w=1800&q=85",
+};
 
 const PROMO_BANNERS = [
   {
@@ -351,34 +352,62 @@ const SkinaeInspiredStorefront = ({ mode = "home", initialProducts = [] }) => {
         <>
           <section
             className={styles.hero}
-            style={{
-              "--hero-image": `url(${PROMO_BANNERS[0].image})`,
-            }}
+            style={{ "--hero-image": `url(${HERO_VIDEO.fallback})` }}
           >
-            <div className={styles.heroCopy}>
-              <p className={styles.heroEyebrow}>Made for skin professionals and serious home-care buyers</p>
-              <h1>Professional Skin Aesthetics and Beauty Products</h1>
-              <p>
-                Shop skincare, meso serums, exosomes, fillers, peels, boosters and treatment tools from one polished
-                online catalog.
-              </p>
-              <div className={styles.heroActions}>
+            <video
+              className={styles.heroVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={HERO_VIDEO.fallback}
+            >
+              <source src={HERO_VIDEO.src} type="video/mp4" />
+            </video>
+            <div className={styles.heroShade} aria-hidden="true" />
+            <motion.div
+              className={styles.heroCopy}
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.85, ease: "easeOut" }}
+            >
+              <motion.p
+                className={styles.heroEyebrow}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.55 }}
+              >
+                HASNAT Aesthetics
+              </motion.p>
+              <motion.h1
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25, duration: 0.6 }}
+              >
+                Premium Skin Care Store
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.6 }}
+              >
+                Exosomes, fillers, peels and advanced skincare essentials.
+              </motion.p>
+              <motion.div
+                className={styles.heroActions}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45, duration: 0.55 }}
+              >
                 <Link href="/shop" className={styles.primaryBtn}>
                   Shop Now
                 </Link>
                 <Link href="/contact" className={styles.secondaryBtn}>
                   Call for Guidance
                 </Link>
-              </div>
-              <div className={styles.heroStats}>
-                {BRAND_HIGHLIGHTS.map((item) => (
-                  <div key={item.label} className={styles.heroStat}>
-                    <span>{item.label}</span>
-                    <strong>{item.value}</strong>
-                  </div>
-                ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </section>
 
           <section className={styles.marqueeBar} aria-label="Store promise">
