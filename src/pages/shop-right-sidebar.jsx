@@ -75,7 +75,7 @@ const ShopRightSidebarPage = () => {
     );
 
     if (retailProducts.length === 0) {
-      content = <ErrorMsg msg="No retail products found!" />;
+      content = <ErrorMsg msg="No products found!" />;
     } else {
       // products
       let product_items = retailProducts;

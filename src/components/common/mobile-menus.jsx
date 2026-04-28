@@ -4,9 +4,7 @@ import { mobile_menu } from "@/data/menu-data";
 
 const MENU_META = {
   Home: "Start here",
-  Shop: "Retail skincare",
-  Machines: "Professional devices",
-  "For Clinics": "Clinical access",
+  Products: "All categories",
   Support: "Contact and help",
 };
 

@@ -146,8 +146,8 @@ const HeaderTwo = ({ style_2 = false }) => {
                       </div>
                       <div className="tp-header-action d-flex align-items-center ml-30">
                         <div className="tp-header-action-item d-none d-xxl-block">
-                        <Link href="/professional" className="aura-header-pill-btn aura-header-pill-btn-light">
-                          Clinics
+                        <Link href="/shop" className="aura-header-pill-btn aura-header-pill-btn-light">
+                          Shop All
                         </Link>
                         </div>
                         <div className="tp-header-action-item d-none d-lg-block">

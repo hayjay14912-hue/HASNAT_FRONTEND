@@ -174,19 +174,15 @@ export const getProductAudience = (product) => {
   return "retail";
 };
 
-export const isRetailProduct = (product) => getProductAudience(product) === "retail";
+// Unified storefront mode: all active products are listed under the main shop.
+export const isRetailProduct = (product) => isActiveProduct(product);
 
-export const isProfessionalProduct = (product) => getProductAudience(product) === "professional";
+// Legacy segmented routes are retained, but no product is blocked from cart by audience.
+export const isProfessionalProduct = () => false;
 
-export const isDeviceProduct = (product) => getProductAudience(product) === "device";
+export const isDeviceProduct = () => false;
 
-export const isPurchasableOnline = (product) => {
-  const audience = getProductAudience(product);
-  return isActiveProduct(product) &&
-    audience === "retail" &&
-    !product?.inquiryOnly &&
-    !product?.isInquiryOnly;
-};
+export const isPurchasableOnline = (product) => isActiveProduct(product);
 
 export const getProfessionalTrustMeta = (product) => {
   const manufacturer =

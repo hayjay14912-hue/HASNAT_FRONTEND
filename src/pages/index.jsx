@@ -10,7 +10,6 @@ import FeaturedOfferBanner from "@/components/home/featured-offer-banner";
 import ProductAreaTwo from '@/components/products/beauty/product-area-2';
 import BeautyTestimonial from '@/components/testimonial/beauty-testimonial';
 import FeatureAreaTwo from '@/components/features/feature-area-2';
-import SkincareGateway from '@/components/home/skincare-gateway';
 import { isActiveProduct, isRetailProduct } from "@/utils/product-access";
 import { getActiveBogoOffer } from "@/utils/bogo";
 import { toSlug } from "@/utils/slug";
@@ -69,16 +68,15 @@ export default function Home({
   initialCategories = null,
   initialCategoryCounts = null,
   initialProducts = null,
-  initialBrands = null,
   featuredBogoProduct = null,
 }) {
   const siteUrl = getSiteUrl();
   const canonical = "/";
-  const pageTitle = "Shop Premium Skincare and Clinical Aesthetic Solutions";
+  const pageTitle = "Shop Premium Skincare and Beauty Essentials";
   const description =
-    "Discover NEES Medical skincare and clinic-grade solutions with trusted formulations, transparent product details, and fast support for retail and professional customers.";
+    "Discover premium skincare, beauty, and wellness essentials with trusted formulations, transparent product details, and fast checkout.";
   const keywords =
-    "dermatologist store pakistan, exosome products pakistan, dermaqual pakistan, asce exosome pakistan, clinical products pakistan, aesthetic clinic supplier lahore, nees medical";
+    "skincare pakistan, beauty products pakistan, sunscreen pakistan, serum pakistan, dermatologist skincare store";
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -108,7 +106,6 @@ export default function Home({
         initialCategoryCounts={initialCategoryCounts}
       />
       <ProductAreaTwo initialProducts={initialProducts} />
-      <SkincareGateway initialBrands={initialBrands} initialProducts={initialProducts} />
       <section className="pt-20 pb-20">
         <div className="container">
           <div
@@ -121,7 +118,7 @@ export default function Home({
           >
             <h2 className="h4 mb-10">Sunscreen in Pakistan</h2>
             <p className="mb-15">
-              Explore SPF 50 sunscreen options and compare daily-use products from our live catalog.
+              Explore SPF 50 sunscreen options and compare top daily-use products from our live catalog.
             </p>
             <div className="d-flex flex-wrap gap-2">
               <Link className="tp-btn tp-btn-border" href="/products/keyword/sunscreen">
@@ -168,23 +165,21 @@ export async function getStaticProps() {
         initialCategories: null,
         initialCategoryCounts: null,
         initialProducts: null,
-        initialBrands: null,
       },
       revalidate: 120,
     };
   }
 
-  const [categoriesRes, allProductsRes, brandsRes] = await Promise.all([
+  const [categoriesRes, allProductsRes] = await Promise.all([
     fetchApiJson(baseUrl, "/api/category/show/beauty"),
     fetchApiJson(baseUrl, "/api/product/all"),
-    fetchApiJson(baseUrl, "/api/brand/active"),
   ]);
 
   const allProducts = Array.isArray(allProductsRes?.data) ? allProductsRes.data : [];
-  const retailProducts = allProducts.filter(
+  const activeProducts = allProducts.filter(
     (item) => isActiveProduct(item) && isRetailProduct(item)
   );
-  const categoryCounts = retailProducts.reduce((acc, item) => {
+  const categoryCounts = activeProducts.reduce((acc, item) => {
     const categoryId = String(item?.category?.id || item?.category?._id || "");
     const categorySlug = toSlug(item?.category?.name || item?.parent || "");
 
@@ -197,15 +192,15 @@ export async function getStaticProps() {
     return acc;
   }, {});
 
-  const featuredRetailProducts = retailProducts.filter(
+  const featuredRetailProducts = activeProducts.filter(
     (item) => Boolean(item?.feature ?? item?.featured)
   );
-  const bogoRetailProducts = retailProducts.filter((item) => Boolean(getActiveBogoOffer(item)));
+  const bogoRetailProducts = activeProducts.filter((item) => Boolean(getActiveBogoOffer(item)));
   const featuredBogoSource =
     bogoRetailProducts.find((item) => Boolean(item?.feature ?? item?.featured)) ||
     bogoRetailProducts[0] ||
     null;
-  const newInRetailProducts = retailProducts
+  const newInRetailProducts = activeProducts
     .slice()
     .sort((a, b) => new Date(b?.createdAt || 0) - new Date(a?.createdAt || 0))
     .slice(0, 9);
@@ -227,13 +222,6 @@ export async function getStaticProps() {
     allProductsRes && Array.isArray(allProductsRes?.data)
       ? { data: homeRetailProducts, prefiltered: true }
       : null;
-  const initialBrands =
-    brandsRes &&
-    (Array.isArray(brandsRes?.result) ||
-      Array.isArray(brandsRes?.brands) ||
-      Array.isArray(brandsRes?.data))
-      ? brandsRes
-      : null;
   const featuredBogoProduct = featuredBogoSource ? toHomeProduct(featuredBogoSource) : null;
 
   return {
@@ -241,7 +229,6 @@ export async function getStaticProps() {
       initialCategories,
       initialCategoryCounts,
       initialProducts,
-      initialBrands,
       featuredBogoProduct,
     },
     revalidate: 120,

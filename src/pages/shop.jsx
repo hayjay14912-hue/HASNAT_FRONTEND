@@ -19,7 +19,7 @@ const ShopFilterOffCanvas = dynamic(
   { ssr: false }
 );
 
-const SHOP_CACHE_KEY = "nees:shop:retail-products:v1";
+const SHOP_CACHE_KEY = "hasnat:shop:all-products:v1";
 
 const getProductsFromPayload = (payload) => {
   if (Array.isArray(payload)) return payload;
@@ -62,15 +62,12 @@ const ShopPage = () => {
     isFetching: isShopFetching,
   } = useGetShopProductsQuery();
   const shopProductList = getProductsFromPayload(shopProducts);
-  const shouldFetchAllFallback = !isShopLoading && !isShopFetching && shopProductList.length === 0;
   const {
     data: allProducts,
     isError: isAllError,
     isLoading: isAllLoading,
     isFetching: isAllFetching,
-  } = useGetAllProductsQuery(undefined, {
-    skip: !shouldFetchAllFallback,
-  });
+  } = useGetAllProductsQuery();
   const allProductList = getProductsFromPayload(allProducts);
   const { data: categoriesData } = useGetShowCategoryQuery(undefined, {
     skip: !selectedCategorySlug,
@@ -85,28 +82,28 @@ const ShopPage = () => {
   }, []);
 
   useEffect(() => {
-    const liveProducts = shopProductList.length > 0 ? shopProductList : allProductList;
+    const liveProducts = allProductList.length > 0 ? allProductList : shopProductList;
     if (liveProducts.length > 0) {
       writeShopCache(liveProducts);
       setCachedProducts(liveProducts);
     }
   }, [shopProductList, allProductList]);
 
-  const sourceProducts = shopProductList.length > 0
-    ? shopProductList
-    : allProductList.length > 0
-      ? allProductList
+  const sourceProducts = allProductList.length > 0
+    ? allProductList
+    : shopProductList.length > 0
+      ? shopProductList
       : cachedProducts;
-  const isLoading = isShopLoading || isShopFetching || (shouldFetchAllFallback && (isAllLoading || isAllFetching));
-  const isError = isShopError && (!shouldFetchAllFallback || isAllError);
+  const isLoading = isAllLoading || isAllFetching || (allProductList.length === 0 && (isShopLoading || isShopFetching));
+  const isError = isAllError && isShopError;
 
   // Load the maximum price once the products have been loaded
   useEffect(() => {
     if (!isLoading && !isError && sourceProducts.length > 0) {
-      const retailProducts = sourceProducts.filter(
+      const activeProducts = sourceProducts.filter(
         (item) => isActiveProduct(item) && isRetailProduct(item)
       );
-      const maxPrice = retailProducts.reduce((max, product) => {
+      const maxPrice = activeProducts.reduce((max, product) => {
         return product.price > max ? product.price : max;
       }, 0);
       setPriceValue([0, maxPrice]);
@@ -142,10 +139,10 @@ const ShopPage = () => {
     : "";
   const pageTitle = selectedCategoryLabel
     ? `${selectedCategoryLabel} Products`
-    : "Shop Skincare Products";
+    : "Shop Products";
   const pageDescription = selectedCategoryLabel
-    ? `Browse ${selectedCategoryLabel} products from NEES Medical. Compare formulas, benefits, and pricing with clear product details and fast checkout.`
-    : "Browse NEES Medical retail skincare products by category, concern, and ingredient with transparent pricing and trusted formulations.";
+    ? `Browse ${selectedCategoryLabel} products from HASNAT. Compare formulas, benefits, and pricing with clear product details and fast checkout.`
+    : "Browse HASNAT products by category, concern, and ingredient with transparent pricing and trusted formulations.";
   const canonical = selectedCategorySlug ? `/shop?category=${selectedCategorySlug}` : "/shop";
 
   if (isLoading && sourceProducts.length === 0) {
@@ -158,34 +155,34 @@ const ShopPage = () => {
     content = <ErrorMsg msg="No Products found!" />;
   }
   if ((!isLoading || sourceProducts.length > 0) && sourceProducts.length > 0) {
-    const retailProducts = sourceProducts.filter(
+    const activeProducts = sourceProducts.filter(
       (item) => isActiveProduct(item) && isRetailProduct(item)
     );
-    if (retailProducts.length === 0) {
-      content = <ErrorMsg msg="No retail products found!" />;
+    if (activeProducts.length === 0) {
+      content = <ErrorMsg msg="No products found!" />;
     } else {
       // products
-      let product_items = retailProducts;
+      let product_items = activeProducts;
       // select short filtering
       if (selectValue) {
         if (selectValue === "Recommended") {
-          product_items = retailProducts;
+          product_items = activeProducts;
         } else if (selectValue === "Price: Low to High") {
-          product_items = retailProducts
+          product_items = activeProducts
             .slice()
             .sort((a, b) => Number(a.price) - Number(b.price));
         } else if (selectValue === "Price: High to Low") {
-          product_items = retailProducts
+          product_items = activeProducts
             .slice()
             .sort((a, b) => Number(b.price) - Number(a.price));
         } else if (selectValue === "Newest") {
-          product_items = retailProducts
+          product_items = activeProducts
             .slice()
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         } else if (selectValue === "Promotions") {
-          product_items = retailProducts.filter((p) => p.discount > 0);
+          product_items = activeProducts.filter((p) => p.discount > 0);
         } else {
-          product_items = retailProducts;
+          product_items = activeProducts;
         }
       }
       // price filter
@@ -275,12 +272,12 @@ const ShopPage = () => {
       content = (
         <>
           <ShopArea
-            all_products={retailProducts}
+            all_products={activeProducts}
             products={product_items}
             otherProps={otherProps}
           />
           <ShopFilterOffCanvas
-            all_products={retailProducts}
+            all_products={activeProducts}
             otherProps={otherProps}
           />
         </>

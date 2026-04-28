@@ -18,7 +18,7 @@ export const cartSlice = createSlice({
   reducers: {
     add_cart_product: (state, { payload }) => {
       if (!isPurchasableOnline(payload)) {
-        notifyError("This item is inquiry-only. Please contact sales directly.");
+        notifyError("This item is currently unavailable for online checkout.");
         return;
       }
       const step = getProductPurchaseStep(payload);

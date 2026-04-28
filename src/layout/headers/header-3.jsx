@@ -77,11 +77,8 @@ const HeaderThree = () => {
                       </Link>
                     </div>
                     <div className="aura-header-cta-group d-none d-xl-flex">
-                      <Link href="/professional" prefetch={false} className="aura-header-pill-btn aura-header-pill-btn-light">
-                        Clinics
-                      </Link>
                       <Link href="/shop" prefetch={false} className="aura-header-pill-btn">
-                        Retail
+                        Shop All
                       </Link>
                     </div>
                     <div className="tp-header-action-item d-lg-none">

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { useLazyGetAllProductsQuery } from "@/redux/features/productApi";
-import { isActiveProduct, isRetailProduct } from "@/utils/product-access";
+import { isActiveProduct } from "@/utils/product-access";
 import { buildProductPath } from "@/utils/seo-utils";
 import { getProductSearchSuggestions } from "@/utils/search";
 
@@ -12,13 +12,13 @@ const useSearchFormSubmit = () => {
   const [loadProducts, { data: productsPayload }] = useLazyGetAllProductsQuery();
   const searchTerm = String(searchText || "").trim();
   const allProducts = Array.isArray(productsPayload?.data) ? productsPayload.data : [];
-  const retailProducts = useMemo(
-    () => allProducts.filter((product) => isActiveProduct(product) && isRetailProduct(product)),
+  const searchableProducts = useMemo(
+    () => allProducts.filter((product) => isActiveProduct(product)),
     [allProducts]
   );
   const suggestions = useMemo(
-    () => getProductSearchSuggestions(retailProducts, searchTerm, 6),
-    [retailProducts, searchTerm]
+    () => getProductSearchSuggestions(searchableProducts, searchTerm, 6),
+    [searchableProducts, searchTerm]
   );
   const showSuggestions = searchTerm.length >= 2 && suggestions.length > 0;
 

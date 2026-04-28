@@ -31,7 +31,7 @@ const Footer = ({ style_2 = false, style_3 = false,primary_style=false }) => {
 	                      </Link>
 	                    </div>
 	                    <p className="tp-footer-desc">
-	                      Premium skincare and aesthetic solutions for both personal care customers and licensed clinics.
+	                      Premium skincare and aesthetic solutions with easy online shopping across all product categories.
 	                    </p>
                     <div className="tp-footer-social">
                       {social_data.map(s => <a href={s.link} key={s.id} target="_blank" rel="noopener noreferrer">
@@ -63,16 +63,15 @@ const Footer = ({ style_2 = false, style_3 = false,primary_style=false }) => {
               </div>
               <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                 <div className="tp-footer-widget footer-col-3 mb-50">
-                  <h4 className="tp-footer-widget-title">For Clinics (B2B)</h4>
+                  <h4 className="tp-footer-widget-title">Customer Care</h4>
                   <div className="tp-footer-widget-content">
                     <ul>
-                      <li><Link href="/professional">Professional Catalog</Link></li>
-                      <li><Link href="/professional-keywords">Clinical Keyword Index</Link></li>
-                      <li><Link href="/medical-devices">Medical Devices</Link></li>
-                      <li><Link href="/request-pricing">Product Inquiry</Link></li>
-                      <li><Link href="/request-quote">Request Device Quote</Link></li>
-                      <li><Link href="/contact-sales">Talk to Sales</Link></li>
-                      <li><Link href="/book-demo">Book a Demo</Link></li>
+                      <li><Link href="/contact">Contact Us</Link></li>
+                      <li><Link href="/request-quote">Request Quote</Link></li>
+                      <li><Link href="/coupon">Coupons</Link></li>
+                      <li><Link href="/login">Login</Link></li>
+                      <li><Link href="/register">Create Account</Link></li>
+                      <li><Link href="/profile">My Account</Link></li>
                     </ul>
                   </div>
                 </div>
