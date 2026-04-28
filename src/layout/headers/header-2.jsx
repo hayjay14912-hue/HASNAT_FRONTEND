@@ -94,7 +94,7 @@ const HeaderTwo = ({ style_2 = false }) => {
 	                        <Image
                             className="aura-brand-logo"
                             src={brand_logo}
-                            alt="NEES Medical Inc logo"
+                            alt="HASNAT logo"
                             width={72}
                             height={72}
                             sizes={HEADER_LOGO_SIZES}

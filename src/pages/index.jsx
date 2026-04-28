@@ -80,7 +80,7 @@ export default function Home({
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "NEES Medical",
+    name: "HASNAT",
     url: `${siteUrl}/`,
     potentialAction: {
       "@type": "SearchAction",

@@ -23,7 +23,7 @@ const Footer = ({ style_2 = false, style_3 = false,primary_style=false }) => {
 	                        <Image
 	                          className="aura-brand-logo"
 	                          src={brand_logo}
-	                          alt="NEES Medical Inc logo"
+	                          alt="HASNAT logo"
                             width={72}
                             height={72}
                             sizes="(max-width: 768px) 52px, 72px"
@@ -119,7 +119,7 @@ const Footer = ({ style_2 = false, style_3 = false,primary_style=false }) => {
                 <div className="col-md-6">
                   <div className="tp-footer-copyright">
                     <p>
-                      © {new Date().getFullYear()} NEES Medical. All rights reserved.
+                      © {new Date().getFullYear()} HASNAT. All rights reserved.
                     </p>
                   </div>
                 </div>

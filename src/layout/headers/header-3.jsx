@@ -40,7 +40,7 @@ const HeaderThree = () => {
                       <Image
                         className="aura-brand-logo"
                         src={brand_logo}
-                        alt="NEES Medical Inc logo"
+                        alt="HASNAT logo"
                         width={80}
                         height={80}
                         sizes={HEADER_LOGO_SIZES}
