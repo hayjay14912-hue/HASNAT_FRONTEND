@@ -1,39 +1,18 @@
 import SEO from "@/components/seo";
 import Wrapper from "@/layout/wrapper";
-import SkinaeInspiredStorefront from "@/components/storefront/skinae-inspired-storefront";
+import MeamoSkinBoostersArchive from "@/components/storefront/meamo-skin-boosters-archive";
 
-const HomePage = ({ initialProducts = [] }) => {
+const HomePage = () => {
   return (
     <Wrapper>
       <SEO
-        pageTitle="Professional Skin Aesthetics and Beauty Products"
-        description="Shop full skincare and beauty catalog in one storefront experience with direct cart and checkout."
+        pageTitle="Korean Skin Boosters"
+        description="Browse Korean skin boosters with category filters, price filters, sorting, product cards, and quick product actions."
         canonical="/"
       />
-      <SkinaeInspiredStorefront mode="home" initialProducts={initialProducts} />
+      <MeamoSkinBoostersArchive />
     </Wrapper>
   );
 };
 
 export default HomePage;
-
-export async function getServerSideProps() {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "https://hasnat-backend-iota.vercel.app";
-  let initialProducts = [];
-
-  try {
-    const res = await fetch(`${baseUrl}/api/product/all`);
-    if (res.ok) {
-      const payload = await res.json();
-      initialProducts = Array.isArray(payload?.data) ? payload.data : [];
-    }
-  } catch (error) {
-    initialProducts = [];
-  }
-
-  return {
-    props: {
-      initialProducts,
-    },
-  };
-}
