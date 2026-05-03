@@ -15,24 +15,24 @@ import { useGetShopProductsQuery } from "@/redux/features/productApi";
 import styles from "@/styles/meamo-skin-boosters.module.css";
 
 const topCategories = [
-  ["Botulinum Toxins", "22 products"],
-  ["Dermal Fillers", "82 products"],
-  ["Korean Skin Boosters", "67 products"],
-  ["Body Fillers", "9 products"],
-  ["Numbing Cream", "7 products"],
-  ["Devices & Disposables", "36 products"],
-  ["Sets", "24 products"],
-  ["Health Boosters", "11 products"],
-  ["Korean Skincare", "67 products"],
-  ["Lifting Thread", "14 products"],
-  ["Clearance", "1 product"],
-  ["Contouring Serums", "18 products"],
-  ["Newly Curated", "39 products"],
-  ["Meamo Labs", "16 products"],
-  ["Collagen Stimulators", "10 products"],
-  ["CE Certified", "21 products"],
-  ["Microneedling", "67 products"],
-  ["Hair Treatment", "6 products"],
+  "Botulinum Toxins",
+  "Dermal Fillers",
+  "Korean Skin Boosters",
+  "Body Fillers",
+  "Numbing Cream",
+  "Devices & Disposables",
+  "Sets",
+  "Health Boosters",
+  "Korean Skincare",
+  "Lifting Thread",
+  "Clearance",
+  "Contouring Serums",
+  "Newly Curated",
+  "Meamo Labs",
+  "Collagen Stimulators",
+  "CE Certified",
+  "Microneedling",
+  "Hair Treatment",
 ];
 
 const sidebarCategories = [
@@ -586,32 +586,26 @@ const MeamoSkinBoostersArchive = () => {
     mappedLiveProducts.length > 0
       ? mappedLiveProducts
       : catalogProducts;
-  const categoryCounts = useMemo(() => {
-    const countMap = new Map();
+  const categoryNames = useMemo(() => {
+    const seen = new Set();
+    const names = [];
+
     for (const item of catalogSourceProducts) {
-      const categoryName = String(
-        item?.children || item?.category?.name || "Clinical"
-      ).trim();
-      if (!categoryName) continue;
-      countMap.set(categoryName, (countMap.get(categoryName) || 0) + 1);
+      const categoryName = String(item?.children || item?.category?.name || "Clinical").trim();
+      if (!categoryName || seen.has(categoryName)) continue;
+      seen.add(categoryName);
+      names.push(categoryName);
     }
-    return Array.from(countMap.entries())
-      .map(([name, count]) => ({
-        name,
-        count,
-        label: `${count} ${count === 1 ? "product" : "products"}`,
-      }))
-      .sort((a, b) => b.count - a.count);
+
+    return names.sort((a, b) => a.localeCompare(b));
   }, [catalogSourceProducts]);
   const topCategoryEntries =
-    categoryCounts.length > 0
-      ? categoryCounts
-      : topCategories.map(([name, label]) => ({ name, count: 0, label }));
+    categoryNames.length > 0 ? categoryNames : topCategories;
   const sidebarCategoryEntries =
     topCategoryEntries.length > 0
-      ? topCategoryEntries.map((item) => item.name)
+      ? topCategoryEntries
       : sidebarCategories;
-  const fallbackCategory = topCategoryEntries[0]?.name || "Clinical";
+  const fallbackCategory = topCategoryEntries[0] || "Clinical";
   const [activeCategory, setActiveCategory] = useState(fallbackCategory);
   const [expandedFilter, setExpandedFilter] = useState("Categories");
   const [searchTerm, setSearchTerm] = useState("");
@@ -625,7 +619,7 @@ const MeamoSkinBoostersArchive = () => {
   const [statusMessage, setStatusMessage] = useState("");
 
   useEffect(() => {
-    if (!topCategoryEntries.find((item) => item.name === activeCategory)) {
+    if (!topCategoryEntries.includes(activeCategory)) {
       setActiveCategory(fallbackCategory);
     }
   }, [activeCategory, fallbackCategory, topCategoryEntries]);
@@ -778,7 +772,7 @@ const MeamoSkinBoostersArchive = () => {
             <div className={styles.topCategoryGrid}>
               <h2>Categories</h2>
               <ul>
-                {topCategoryEntries.map(({ name, label }) => (
+                {topCategoryEntries.map((name) => (
                   <li key={name}>
                     <Link
                       href="/"
@@ -790,7 +784,6 @@ const MeamoSkinBoostersArchive = () => {
                       }}
                     >
                       <span>{name}</span>
-                      <small>{label}</small>
                     </Link>
                   </li>
                 ))}
