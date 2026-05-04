@@ -637,11 +637,6 @@ const MeamoSkinBoostersArchive = () => {
   const mappedLiveProducts = useMemo(
     () =>
       shopProductsRaw
-        .filter((item) => {
-          const type = String(item?.productType || "").toLowerCase();
-          const parent = String(item?.parent || "").toLowerCase();
-          return type === "clinical" || parent === "clinical";
-        })
         .map((item, index) => mapBackendProductToCard(item, index))
         .filter((item) => Boolean(item.img && item.title)),
     [shopProductsRaw]
