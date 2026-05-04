@@ -11,6 +11,7 @@ import {
 import { add_to_compare } from "@/redux/features/compareSlice";
 import { handleProductModal } from "@/redux/features/productModalSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
+import { useGetShowCategoryQuery } from "@/redux/features/categoryApi";
 import { useGetShopProductsQuery } from "@/redux/features/productApi";
 import styles from "@/styles/meamo-skin-boosters.module.css";
 
@@ -57,6 +58,39 @@ const sidebarCategories = [
   "Sets",
   "Uncategorized",
 ];
+
+const extractCategoryNames = (payload) => {
+  const source = Array.isArray(payload?.result)
+    ? payload.result
+    : Array.isArray(payload?.data)
+      ? payload.data
+      : Array.isArray(payload)
+        ? payload
+        : [];
+
+  const seen = new Set();
+  const names = [];
+
+  source.forEach((item) => {
+    const parentName = String(item?.parent || item?.name || "").trim();
+    if (parentName && !seen.has(parentName)) {
+      seen.add(parentName);
+      names.push(parentName);
+    }
+
+    if (Array.isArray(item?.children)) {
+      item.children.forEach((child) => {
+        const childName = String(child || "").trim();
+        if (childName && !seen.has(childName)) {
+          seen.add(childName);
+          names.push(childName);
+        }
+      });
+    }
+  });
+
+  return names;
+};
 
 const concerns = [
   "Acne",
@@ -562,6 +596,7 @@ const MeamoSkinBoostersArchive = () => {
   const { cart_products } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
+  const { data: categoriesRes } = useGetShowCategoryQuery();
   const { data: shopProductsRes } = useGetShopProductsQuery();
   const shopProductsRaw = Array.isArray(shopProductsRes)
     ? shopProductsRes
@@ -586,21 +621,12 @@ const MeamoSkinBoostersArchive = () => {
     mappedLiveProducts.length > 0
       ? mappedLiveProducts
       : catalogProducts;
-  const categoryNames = useMemo(() => {
-    const seen = new Set();
-    const names = [];
-
-    for (const item of catalogSourceProducts) {
-      const categoryName = String(item?.children || item?.category?.name || "Clinical").trim();
-      if (!categoryName || seen.has(categoryName)) continue;
-      seen.add(categoryName);
-      names.push(categoryName);
-    }
-
-    return names.sort((a, b) => a.localeCompare(b));
-  }, [catalogSourceProducts]);
+  const backendCategoryNames = useMemo(
+    () => extractCategoryNames(categoriesRes),
+    [categoriesRes]
+  );
   const topCategoryEntries =
-    categoryNames.length > 0 ? categoryNames : topCategories;
+    backendCategoryNames.length > 0 ? backendCategoryNames : topCategories;
   const sidebarCategoryEntries =
     topCategoryEntries.length > 0
       ? topCategoryEntries
