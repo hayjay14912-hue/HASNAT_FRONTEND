@@ -13,6 +13,7 @@ import { handleProductModal } from "@/redux/features/productModalSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
 import { useGetShowCategoryQuery } from "@/redux/features/categoryApi";
 import { useGetShopProductsQuery } from "@/redux/features/productApi";
+import { toSlug } from "@/utils/slug";
 import styles from "@/styles/meamo-skin-boosters.module.css";
 
 const topCategories = [
@@ -90,6 +91,34 @@ const extractCategoryNames = (payload) => {
   });
 
   return names;
+};
+
+const extractCategoryRecords = (payload) => {
+  const source = Array.isArray(payload?.result)
+    ? payload.result
+    : Array.isArray(payload?.data)
+      ? payload.data
+      : Array.isArray(payload)
+        ? payload
+        : [];
+
+  return source
+    .map((item) => {
+      const name = String(item?.parent || item?.name || "").trim();
+      if (!name) return null;
+
+      return {
+        id: String(item?._id || item?.id || "").trim(),
+        name,
+        slug: toSlug(name),
+        parent: String(item?.parent || item?.name || "").trim(),
+        children: Array.isArray(item?.children)
+          ? item.children.map((child) => String(child || "").trim()).filter(Boolean)
+          : [],
+        products: Array.isArray(item?.products) ? item.products : [],
+      };
+    })
+    .filter(Boolean);
 };
 
 const concerns = [
@@ -621,10 +650,21 @@ const MeamoSkinBoostersArchive = () => {
     mappedLiveProducts.length > 0
       ? mappedLiveProducts
       : catalogProducts;
-  const backendCategoryNames = useMemo(
-    () => extractCategoryNames(categoriesRes),
+  const backendCategoryRecords = useMemo(
+    () => extractCategoryRecords(categoriesRes),
     [categoriesRes]
   );
+  const backendCategoryNames = useMemo(() => {
+    const seen = new Set();
+    const names = [];
+    backendCategoryRecords.forEach((record) => {
+      if (!seen.has(record.name)) {
+        seen.add(record.name);
+        names.push(record.name);
+      }
+    });
+    return names;
+  }, [backendCategoryRecords]);
   const topCategoryEntries =
     backendCategoryNames.length > 0 ? backendCategoryNames : topCategories;
   const sidebarCategoryEntries =
@@ -649,6 +689,78 @@ const MeamoSkinBoostersArchive = () => {
       setActiveCategory(fallbackCategory);
     }
   }, [activeCategory, fallbackCategory, topCategoryEntries]);
+
+  const activeCategoryRecord = useMemo(() => {
+    const currentKey = toSlug(activeCategory);
+    if (!currentKey) return null;
+
+    return (
+      backendCategoryRecords.find((record) => {
+        if (record.slug === currentKey || toSlug(record.parent) === currentKey) {
+          return true;
+        }
+
+        return record.children.some((child) => toSlug(child) === currentKey);
+      }) || null
+    );
+  }, [activeCategory, backendCategoryRecords]);
+
+  const activeCategoryProductIds = useMemo(() => {
+    const ids = new Set();
+    const products = Array.isArray(activeCategoryRecord?.products)
+      ? activeCategoryRecord.products
+      : [];
+
+    products.forEach((entry) => {
+      const id =
+        typeof entry === "string"
+          ? entry
+          : String(entry?._id || entry?.id || "").trim();
+      if (id) {
+        ids.add(id);
+      }
+    });
+
+    return ids;
+  }, [activeCategoryRecord]);
+
+  const activeCategoryAliases = useMemo(() => {
+    const aliases = new Set();
+    const addAlias = (value) => {
+      const slug = toSlug(value);
+      if (slug) aliases.add(slug);
+    };
+
+    addAlias(activeCategory);
+    if (activeCategoryRecord) {
+      addAlias(activeCategoryRecord.name);
+      addAlias(activeCategoryRecord.parent);
+      activeCategoryRecord.children.forEach(addAlias);
+    }
+
+    const name = String(activeCategoryRecord?.name || activeCategory || "");
+    if (/dermal fillers?/i.test(name)) addAlias("fillers");
+    if (/body fillers?/i.test(name)) addAlias("fillers");
+    if (/korean skin boosters?/i.test(name)) addAlias("boosters");
+    if (/numbing cream/i.test(name)) addAlias("numbing");
+    if (/devices? & disposables?/i.test(name)) {
+      addAlias("devices");
+      addAlias("disposables");
+    }
+    if (/health boosters?/i.test(name)) addAlias("boosters");
+    if (/korean skincare/i.test(name)) addAlias("skincare");
+    if (/lifting thread/i.test(name)) addAlias("thread");
+    if (/clearance/i.test(name)) addAlias("clearance");
+    if (/contouring serums?/i.test(name)) addAlias("serum");
+    if (/meamo labs/i.test(name)) addAlias("labs");
+    if (/collagen stimulators?/i.test(name)) addAlias("collagen");
+    if (/ce certified/i.test(name)) addAlias("certified");
+    if (/microneedling/i.test(name)) addAlias("needle");
+    if (/hair treatment/i.test(name)) addAlias("hair");
+    if (/botulinum toxins?/i.test(name)) addAlias("toxins");
+
+    return Array.from(aliases);
+  }, [activeCategory, activeCategoryRecord]);
 
   const dynamicKeywordOptions = useMemo(() => {
     const unique = new Set();
@@ -681,6 +793,29 @@ const MeamoSkinBoostersArchive = () => {
       const productCategory = String(
         product?.children || product?.category?.name || ""
       ).trim();
+      const productCategorySlug = toSlug(
+        product?.children || product?.category?.name || product?.parent || ""
+      );
+      const productText = [
+        product?.title,
+        product?.description,
+        product?.parent,
+        product?.children,
+        product?.category?.name,
+        product?.category?.parent,
+        ...(Array.isArray(product?.tags) ? product.tags : []),
+      ]
+        .filter(Boolean)
+        .map((item) => String(item).toLowerCase())
+        .join(" ");
+      const productId = String(product?._id || product?.id || "").trim();
+      const matchesCategoryById =
+        activeCategoryProductIds.size > 0 && activeCategoryProductIds.has(productId);
+      const matchesCategoryByAlias =
+        activeCategoryAliases.length > 0 &&
+        activeCategoryAliases.some(
+          (alias) => productCategorySlug === alias || productText.includes(alias.replace(/-/g, " "))
+        );
       const matchesSearch =
         !term ||
         product.title.toLowerCase().includes(term) ||
@@ -690,7 +825,12 @@ const MeamoSkinBoostersArchive = () => {
           )) ||
         (Array.isArray(product.concerns) &&
           product.concerns.some((item) => String(item).toLowerCase().includes(term)));
-      const matchesCategory = !activeCategory || productCategory === activeCategory;
+      const matchesCategory =
+        !activeCategory ||
+        matchesCategoryById ||
+        matchesCategoryByAlias ||
+        productCategory === activeCategory ||
+        productCategorySlug === toSlug(activeCategory);
       const matchesMin = min === null || product.price >= min;
       const matchesMax = max === null || product.price <= max;
       const matchesConcern =
