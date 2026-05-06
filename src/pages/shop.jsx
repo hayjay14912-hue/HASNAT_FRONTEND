@@ -18,7 +18,15 @@ const ShopPage = ({ initialProducts = [] }) => {
 export default ShopPage;
 
 export async function getServerSideProps() {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "https://hasnat-backend.vercel.app";
+  const defaultApiBaseUrl = "https://hasnat-backend.vercel.app";
+  const envApiBaseUrl = String(process.env.NEXT_PUBLIC_API_BASE_URL || "").trim();
+  const isLoopbackApi = /localhost|127\.0\.0\.1/i.test(envApiBaseUrl);
+  const isLocalRuntime = process.env.NODE_ENV !== "production";
+
+  const baseUrl =
+    envApiBaseUrl && (isLocalRuntime || !isLoopbackApi)
+      ? envApiBaseUrl
+      : defaultApiBaseUrl;
   let initialProducts = [];
 
   try {

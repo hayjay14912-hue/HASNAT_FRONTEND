@@ -1,8 +1,15 @@
 import Cookies from "js-cookie";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+const DEFAULT_API_BASE_URL = "https://hasnat-backend.vercel.app";
+const envApiBaseUrl = String(process.env.NEXT_PUBLIC_API_BASE_URL || "").trim();
+const isLoopbackApi = /localhost|127\.0\.0\.1/i.test(envApiBaseUrl);
+const isLocalRuntime = process.env.NODE_ENV !== "production";
+
 const NEXT_PUBLIC_API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "https://hasnat-backend.vercel.app";
+  envApiBaseUrl && (isLocalRuntime || !isLoopbackApi)
+    ? envApiBaseUrl
+    : DEFAULT_API_BASE_URL;
 
 export const apiSlice = createApi({
   reducerPath: "api",
