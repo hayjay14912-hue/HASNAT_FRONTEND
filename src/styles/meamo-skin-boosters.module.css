@@ -434,6 +434,244 @@
   height: 21px;
 }
 
+.frontHeroSection {
+  padding: 0 0 22px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.045) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 80%, rgba(0, 0, 0, 0.035) 0 1px, transparent 1px),
+    #f6f4f0;
+  background-size: 8px 8px, 10px 10px, auto;
+}
+
+.frontHeroCard {
+  position: relative;
+  min-height: 682px;
+  border-radius: 14px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(420px, 1fr) minmax(280px, 44%);
+  align-items: center;
+  padding: 42px 58px 70px;
+}
+
+.frontHeroOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(36, 40, 45, 0.66) 0%, rgba(46, 50, 57, 0.48) 34%, rgba(69, 75, 87, 0.1) 64%, rgba(255, 255, 255, 0.02) 100%);
+  pointer-events: none;
+}
+
+.frontHeroContent,
+.frontHeroProductWrap,
+.frontHeroArrow,
+.frontHeroDots {
+  position: relative;
+  z-index: 1;
+}
+
+.frontHeroContent {
+  max-width: 560px;
+  color: #fff;
+  padding-left: 2px;
+}
+
+.heroTrustRow {
+  margin: 0 0 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.heroTrustRow strong {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.heroTrustStars {
+  color: #22c56f;
+  letter-spacing: 2px;
+  font-size: 18px;
+}
+
+.heroKicker {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  border-radius: 10px;
+  background: #e4aa74;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 9px 20px;
+  margin-bottom: 18px;
+}
+
+.frontHeroContent h2 {
+  margin: 0 0 14px;
+  color: #fff;
+  font-family: "Poppins", Arial, Helvetica, sans-serif !important;
+  font-size: clamp(44px, 3.8vw, 68px);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.frontHeroContent h2 span {
+  display: block;
+  margin-top: 2px;
+  color: #ffb57a;
+}
+
+.frontHeroContent p {
+  max-width: 530px;
+  margin: 0 0 28px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(17px, 1.45vw, 26px);
+  font-weight: 500;
+  line-height: 1.42;
+}
+
+.heroCtaButton {
+  min-width: 250px;
+  height: 76px;
+  border: 0;
+  border-radius: 10px;
+  background: #f39b4b;
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: clamp(20px, 1.95vw, 32px);
+  font-weight: 700;
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.heroCtaButton:hover {
+  background: #e78b38;
+  transform: translateY(-2px);
+}
+
+.frontHeroProductWrap {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.frontHeroProductWrap img {
+  width: min(570px, 90%);
+  max-height: 620px;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 24px 26px rgba(19, 23, 32, 0.35));
+}
+
+.frontHeroArrow {
+  position: absolute;
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(75, 80, 88, 0.4);
+  color: #1f2023;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 52px;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.frontHeroArrowLeft {
+  left: 20px;
+}
+
+.frontHeroArrowRight {
+  right: 20px;
+}
+
+.frontHeroDots {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  min-height: 30px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 12px;
+}
+
+.frontHeroDots button {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: 50%;
+  background: #b8b8b8;
+  cursor: pointer;
+  padding: 0;
+}
+
+.frontHeroDots button.dotActive {
+  background: #535353;
+}
+
+.heroFeatureRow {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.heroFeatureCard {
+  min-height: 158px;
+  border-radius: 12px;
+  background: #ffd8bf;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 26px;
+}
+
+.heroFeatureCard > span {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border-radius: 12px;
+  background: #121212;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.heroFeatureCard h3 {
+  margin: 0 0 6px;
+  color: #242424;
+  font-size: clamp(23px, 1.7vw, 32px);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.heroFeatureCard p {
+  margin: 0;
+  color: #5f5f5f;
+  font-size: clamp(17px, 1.15vw, 23px);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
 .archiveHero {
   padding: 46px 0 78px;
   background: var(--meamo-peach);
@@ -1169,6 +1407,28 @@
 }
 
 @media (max-width: 1100px) {
+  .frontHeroCard {
+    min-height: 560px;
+    grid-template-columns: minmax(280px, 1fr);
+    padding: 28px 28px 64px;
+  }
+
+  .frontHeroProductWrap {
+    display: none;
+  }
+
+  .heroFeatureRow {
+    grid-template-columns: 1fr;
+  }
+
+  .heroFeatureCard h3 {
+    font-size: 30px;
+  }
+
+  .heroFeatureCard p {
+    font-size: 24px;
+  }
+
   .promoStrip > button:first-child {
     left: 18px;
   }
@@ -1322,6 +1582,89 @@
   .shopShell,
   .headerContainer {
     width: min(100% - 22px, 1220px);
+  }
+
+  .frontHeroCard {
+    min-height: 430px;
+    padding: 22px 18px 56px;
+    border-radius: 10px;
+  }
+
+  .heroTrustRow {
+    margin-bottom: 10px;
+  }
+
+  .heroTrustRow strong {
+    font-size: 16px;
+  }
+
+  .heroTrustStars {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .heroKicker {
+    min-height: 32px;
+    border-radius: 8px;
+    font-size: 14px;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+  }
+
+  .frontHeroContent h2 {
+    font-size: 36px;
+  }
+
+  .frontHeroContent p {
+    font-size: 14px;
+    margin-bottom: 16px;
+    max-width: 330px;
+  }
+
+  .heroCtaButton {
+    min-width: 160px;
+    height: 46px;
+    border-radius: 8px;
+    font-size: 22px;
+  }
+
+  .frontHeroArrow {
+    width: 38px;
+    height: 38px;
+    font-size: 32px;
+  }
+
+  .frontHeroArrowLeft {
+    left: 10px;
+  }
+
+  .frontHeroArrowRight {
+    right: 10px;
+  }
+
+  .heroFeatureRow {
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .heroFeatureCard {
+    min-height: 90px;
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .heroFeatureCard > span {
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+  }
+
+  .heroFeatureCard h3 {
+    font-size: 17px;
+  }
+
+  .heroFeatureCard p {
+    font-size: 14px;
   }
 
   .promoStrip {

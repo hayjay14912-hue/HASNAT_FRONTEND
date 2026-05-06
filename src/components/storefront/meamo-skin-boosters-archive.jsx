@@ -298,6 +298,25 @@ const products = [
   },
 ];
 
+const heroSlides = [
+  {
+    id: "summer-sun-care",
+    trust: "Excellent",
+    trustBrand: "Trustpilot",
+    kicker: "New Customer Gift — Limited Stock!",
+    titleLine1: "Sunscreen Gift on Your",
+    titleLine2: "First Order",
+    description:
+      "Get ready for summer! Get a Merikit Cica Perfect Suncream — on us. Auto-added to your first Meamo order while supplies last.",
+    cta: "Claim Your Gift",
+    background:
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80",
+    productImage:
+      "https://cdn.shopify.com/s/files/1/0748/4384/9018/files/Dr.PenUltimaA6.webp?v=1753258052",
+    productAlt: "Featured skincare product",
+  },
+];
+
 const toNumberPrice = (value) => {
   const match = String(value).match(/([0-9]+(?:\.[0-9]+)?)/);
   return match ? Number(match[1]) : 0;
@@ -707,6 +726,7 @@ const MeamoSkinBoostersArchive = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("default");
   const [showCount, setShowCount] = useState(12);
+  const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [activeConcern, setActiveConcern] = useState("");
@@ -901,6 +921,19 @@ const MeamoSkinBoostersArchive = () => {
   ]);
 
   const visibleProducts = filteredProducts.slice(0, showCount);
+  const currentHero = heroSlides[activeHeroSlide] || heroSlides[0];
+
+  const handlePrevHero = () => {
+    setActiveHeroSlide((current) =>
+      current === 0 ? heroSlides.length - 1 : current - 1
+    );
+  };
+
+  const handleNextHero = () => {
+    setActiveHeroSlide((current) =>
+      current === heroSlides.length - 1 ? 0 : current + 1
+    );
+  };
 
   const updateQuantity = (productId, nextQuantity) => {
     setQuantities((current) => ({
@@ -962,6 +995,90 @@ const MeamoSkinBoostersArchive = () => {
         onStatus={setStatusMessage}
       />
       <main>
+        <section className={styles.frontHeroSection}>
+          <div className={styles.container}>
+            <article
+              className={styles.frontHeroCard}
+              style={{ backgroundImage: `url(${currentHero.background})` }}
+            >
+              <div className={styles.frontHeroOverlay} />
+              <button
+                type="button"
+                aria-label="Previous slide"
+                className={`${styles.frontHeroArrow} ${styles.frontHeroArrowLeft}`}
+                onClick={handlePrevHero}
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                aria-label="Next slide"
+                className={`${styles.frontHeroArrow} ${styles.frontHeroArrowRight}`}
+                onClick={handleNextHero}
+              >
+                ›
+              </button>
+
+              <div className={styles.frontHeroContent}>
+                <p className={styles.heroTrustRow}>
+                  <strong>{currentHero.trust}</strong>
+                  <span className={styles.heroTrustStars}>★★★★★</span>
+                  <span>{currentHero.trustBrand}</span>
+                </p>
+                <span className={styles.heroKicker}>{currentHero.kicker}</span>
+                <h2>
+                  {currentHero.titleLine1}
+                  <span>{currentHero.titleLine2}</span>
+                </h2>
+                <p>{currentHero.description}</p>
+                <button type="button" className={styles.heroCtaButton}>
+                  {currentHero.cta}
+                </button>
+              </div>
+
+              <div className={styles.frontHeroProductWrap}>
+                <img src={currentHero.productImage} alt={currentHero.productAlt} />
+              </div>
+
+              <div className={styles.frontHeroDots} aria-label="Slide indicators">
+                {heroSlides.map((slide, index) => (
+                  <button
+                    key={slide.id}
+                    type="button"
+                    aria-label={`Go to slide ${index + 1}`}
+                    className={index === activeHeroSlide ? styles.dotActive : ""}
+                    onClick={() => setActiveHeroSlide(index)}
+                  />
+                ))}
+              </div>
+            </article>
+
+            <div className={styles.heroFeatureRow}>
+              <article className={styles.heroFeatureCard}>
+                <span>◉</span>
+                <div>
+                  <h3>Secure Credit Card Payments</h3>
+                  <p>Easy and hassle-free payments</p>
+                </div>
+              </article>
+              <article className={styles.heroFeatureCard}>
+                <span>▣</span>
+                <div>
+                  <h3>Free Shipping</h3>
+                  <p>Free shipping for 300$ orders</p>
+                </div>
+              </article>
+              <article className={styles.heroFeatureCard}>
+                <span>%</span>
+                <div>
+                  <h3>Discounts &amp; Fair Prices</h3>
+                  <p>Get the highest value possible</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
         <section className={styles.archiveHero}>
           <div className={styles.container}>
             <h1 className={styles.archiveTitle}>{activeCategory}</h1>
