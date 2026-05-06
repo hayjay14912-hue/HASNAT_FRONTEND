@@ -20,6 +20,19 @@ import {
 } from "@/utils/seo-utils";
 import { toSlug } from "@/utils/slug";
 
+const DEFAULT_API_BASE_URL = "https://hasnat-backend.vercel.app";
+const resolveApiBaseUrl = () => {
+  const envApiBaseUrl = String(process.env.NEXT_PUBLIC_API_BASE_URL || "").trim();
+  const isLoopbackApi = /localhost|127\.0\.0\.1/i.test(envApiBaseUrl);
+  const isLocalRuntime = process.env.NODE_ENV !== "production";
+
+  if (envApiBaseUrl && (isLocalRuntime || !isLoopbackApi)) {
+    return envApiBaseUrl;
+  }
+
+  return DEFAULT_API_BASE_URL;
+};
+
 const ProductDetailsBySlugPage = ({ query, initialProduct = null }) => {
   const slugValue = query?.slug;
   const productId = extractProductIdFromSlug(slugValue);
@@ -106,16 +119,7 @@ export const getServerSideProps = async (context) => {
     };
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-  if (!baseUrl) {
-    return {
-      props: {
-        query,
-        initialProduct: null,
-      },
-    };
-  }
+  const baseUrl = resolveApiBaseUrl();
 
   try {
     let initialProduct = null;

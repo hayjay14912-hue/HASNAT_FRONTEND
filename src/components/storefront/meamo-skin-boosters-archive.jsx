@@ -303,6 +303,19 @@ const toNumberPrice = (value) => {
   return match ? Number(match[1]) : 0;
 };
 
+const buildStableProductLink = (product = {}) => {
+  const rawId = String(product?._id || product?.id || "").trim();
+  const safeSlug = toSlug(product?.slug || product?.title || product?.name || "product");
+  const hasMongoId = /^[a-f0-9]{24}$/i.test(rawId);
+
+  // Include ObjectId in the URL tail when possible so detail lookup is deterministic.
+  if (hasMongoId) {
+    return `/product/${safeSlug}-${rawId}`;
+  }
+
+  return buildProductPath(product);
+};
+
 const formatCurrency = (value) => {
   const safeValue = Number(value || 0);
   return `PKR ${safeValue.toLocaleString("en-PK", {
@@ -425,7 +438,7 @@ const ProductCard = ({
   onQuickView,
   onWishlist,
 }) => {
-  const productHref = buildProductPath(product);
+  const productHref = buildStableProductLink(product);
 
   return (
     <article className={styles.productCard}>
