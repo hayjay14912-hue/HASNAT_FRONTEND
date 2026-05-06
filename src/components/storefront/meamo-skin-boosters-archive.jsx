@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { CartTwo, CategoryMenu, Compare, Search, User, Wishlist } from "@/svg";
 import {
@@ -15,6 +16,7 @@ import { useGetShowCategoryQuery } from "@/redux/features/categoryApi";
 import { useGetShopProductsQuery } from "@/redux/features/productApi";
 import { buildProductPath } from "@/utils/seo-utils";
 import { toSlug } from "@/utils/slug";
+import { buildCategoryRoute } from "@/utils/meamo-category-routes";
 import styles from "@/styles/meamo-skin-boosters.module.css";
 
 const topCategories = [
@@ -657,7 +659,8 @@ const MeamoHeader = ({
   </header>
 );
 
-const MeamoSkinBoostersArchive = () => {
+const MeamoSkinBoostersArchive = ({ initialCategory = "" }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { cart_products } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
@@ -720,7 +723,8 @@ const MeamoSkinBoostersArchive = () => {
     topCategoryEntries.length > 0
       ? topCategoryEntries
       : sidebarCategories;
-  const fallbackCategory = topCategoryEntries[0] || "Clinical";
+  const normalizedInitialCategory = String(initialCategory || "").trim();
+  const fallbackCategory = normalizedInitialCategory || topCategoryEntries[0] || "Clinical";
   const [activeCategory, setActiveCategory] = useState(fallbackCategory);
   const [expandedFilter, setExpandedFilter] = useState("Categories");
   const [searchTerm, setSearchTerm] = useState("");
@@ -739,6 +743,12 @@ const MeamoSkinBoostersArchive = () => {
       setActiveCategory(fallbackCategory);
     }
   }, [activeCategory, fallbackCategory, topCategoryEntries]);
+
+  useEffect(() => {
+    if (!normalizedInitialCategory) return;
+    if (!topCategoryEntries.includes(normalizedInitialCategory)) return;
+    setActiveCategory(normalizedInitialCategory);
+  }, [normalizedInitialCategory, topCategoryEntries]);
 
   const activeCategoryRecord = useMemo(() => {
     const currentKey = toSlug(activeCategory);
@@ -942,6 +952,15 @@ const MeamoSkinBoostersArchive = () => {
     }));
   };
 
+  const navigateCategory = (name) => {
+    const route = buildCategoryRoute(name);
+    if (route === router.asPath) {
+      setActiveCategory(name);
+      return;
+    }
+    router.push(route);
+  };
+
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     setStatusMessage(searchTerm ? `Search applied for "${searchTerm}".` : "Search cleared.");
@@ -1088,11 +1107,11 @@ const MeamoSkinBoostersArchive = () => {
                 {topCategoryEntries.map((name) => (
                   <li key={name}>
                     <Link
-                      href="/"
+                      href={buildCategoryRoute(name)}
                       className={activeCategory === name ? styles.activeCategory : ""}
                       onClick={(event) => {
                         event.preventDefault();
-                        setActiveCategory(name);
+                        navigateCategory(name);
                         setStatusMessage(`${name} category selected.`);
                       }}
                     >
@@ -1122,7 +1141,7 @@ const MeamoSkinBoostersArchive = () => {
                         type="button"
                         className={activeCategory === item ? styles.filterOptionActive : ""}
                         onClick={() => {
-                          setActiveCategory(item);
+                          navigateCategory(item);
                           setStatusMessage(`${item} category selected.`);
                         }}
                       >
@@ -1281,7 +1300,14 @@ const MeamoSkinBoostersArchive = () => {
               </section>
               <section>
                 <h3>Product categories</h3>
-                <select value={activeCategory} onChange={(event) => setActiveCategory(event.target.value)}>
+                <select
+                  value={activeCategory}
+                  onChange={(event) => {
+                    const nextCategory = event.target.value;
+                    navigateCategory(nextCategory);
+                    setStatusMessage(`${nextCategory} category selected.`);
+                  }}
+                >
                   {sidebarCategoryEntries.slice(0, 16).map((item, index) => (
                     <option key={`${item}-${index}`}>{item}</option>
                   ))}
