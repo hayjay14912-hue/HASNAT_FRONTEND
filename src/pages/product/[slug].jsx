@@ -1,6 +1,5 @@
 import React from "react";
 import SEO from "@/components/seo";
-import HeaderTwo from "@/layout/headers/header-2";
 import Footer from "@/layout/footers/footer";
 import Wrapper from "@/layout/wrapper";
 import ErrorMsg from "@/components/common/error-msg";
@@ -8,6 +7,7 @@ import { useGetProductQuery } from "@/redux/features/productApi";
 import ProductDetailsBreadcrumb from "@/components/breadcrumb/product-details-breadcrumb";
 import ProductDetailsArea from "@/components/product-details/product-details-area";
 import PrdDetailsLoader from "@/components/loader/prd-details-loader";
+import MeamoCloneHeader from "@/components/storefront/meamo-clone-header";
 import { isActiveProduct } from "@/utils/product-access";
 import {
   buildProductPath,
@@ -98,7 +98,7 @@ const ProductDetailsBySlugPage = ({ query, initialProduct = null }) => {
         keywords={product ? getProductSeoKeywords(product) : ""}
         structuredData={structuredData}
       />
-      <HeaderTwo style_2={true} />
+      <MeamoCloneHeader />
       {content}
       <Footer primary_style={true} />
     </Wrapper>
