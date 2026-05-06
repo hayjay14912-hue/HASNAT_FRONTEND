@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const NEXT_PUBLIC_API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "https://hasnat-backend-iota.vercel.app";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://hasnat-backend.vercel.app";
 
 export const apiSlice = createApi({
   reducerPath: "api",

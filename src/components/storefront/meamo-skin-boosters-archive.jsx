@@ -660,8 +660,25 @@ const MeamoSkinBoostersArchive = () => {
     });
     return names;
   }, [backendCategoryRecords]);
+  const liveProductCategoryNames = useMemo(() => {
+    const seen = new Set();
+    const names = [];
+
+    catalogSourceProducts.forEach((product) => {
+      const name = String(product?.children || product?.category?.name || product?.parent || "").trim();
+      if (!name || seen.has(name)) return;
+      seen.add(name);
+      names.push(name);
+    });
+
+    return names;
+  }, [catalogSourceProducts]);
   const topCategoryEntries =
-    backendCategoryNames.length > 0 ? backendCategoryNames : topCategories;
+    backendCategoryNames.length > 0
+      ? backendCategoryNames
+      : liveProductCategoryNames.length > 0
+        ? liveProductCategoryNames
+        : topCategories;
   const sidebarCategoryEntries =
     topCategoryEntries.length > 0
       ? topCategoryEntries

@@ -18,7 +18,7 @@ const ShopPage = ({ initialProducts = [] }) => {
 export default ShopPage;
 
 export async function getServerSideProps() {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "https://hasnat-backend-iota.vercel.app";
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "https://hasnat-backend.vercel.app";
   let initialProducts = [];
 
   try {
