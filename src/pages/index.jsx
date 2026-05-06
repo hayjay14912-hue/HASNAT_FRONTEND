@@ -10,7 +10,11 @@ const HomePage = () => {
         description="Browse Korean skin boosters with category filters, price filters, sorting, product cards, and quick product actions."
         canonical="/"
       />
-      <MeamoSkinBoostersArchive />
+      <MeamoSkinBoostersArchive
+        showFrontHero
+        layoutMode="home"
+        initialCategory="Korean Skin Boosters"
+      />
     </Wrapper>
   );
 };

@@ -319,6 +319,24 @@ const heroSlides = [
   },
 ];
 
+const homeCategoryImageBySlug = {
+  "botulinum-toxins":
+    "https://cdn.shopify.com/s/files/1/0748/4384/9018/files/Neurovie-100U.jpg?v=1753258167",
+  "dermal-fillers":
+    "https://cdn.shopify.com/s/files/1/0748/4384/9018/files/Regenovue_Deep_Plus_1_1.jpg?v=1753258168",
+  "korean-skin-boosters":
+    "https://cdn.shopify.com/s/files/1/0748/4384/9018/files/Jeunetique_EXO.png?v=1753258170",
+  "devices-disposables":
+    "https://cdn.shopify.com/s/files/1/0748/4384/9018/files/Dr.PenUltimaA6.webp?v=1753258052",
+  sets: "https://cdn.shopify.com/s/files/1/0748/4384/9018/files/Jeunetique_PN_Pro_1.jpg?v=1753258169",
+  "korean-skincare":
+    "https://cdn.shopify.com/s/files/1/0748/4384/9018/files/medicube-zero-pore.webp?v=1753258056",
+  "contouring-serums":
+    "https://cdn.shopify.com/s/files/1/0748/4384/9018/files/Ascorbix_20.jpg?v=1753258166",
+  "meamo-labs":
+    "https://cdn.shopify.com/s/files/1/0748/4384/9018/files/Jeunetique_NAD.jpg?v=1753258168",
+};
+
 const toNumberPrice = (value) => {
   const match = String(value).match(/([0-9]+(?:\.[0-9]+)?)/);
   return match ? Number(match[1]) : 0;
@@ -659,7 +677,11 @@ const MeamoHeader = ({
   </header>
 );
 
-const MeamoSkinBoostersArchive = ({ initialCategory = "" }) => {
+const MeamoSkinBoostersArchive = ({
+  initialCategory = "",
+  showFrontHero = false,
+  layoutMode = "archive",
+}) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { cart_products } = useSelector((state) => state.cart);
@@ -737,6 +759,7 @@ const MeamoSkinBoostersArchive = ({ initialCategory = "" }) => {
   const [activeIngredient, setActiveIngredient] = useState("");
   const [quantities, setQuantities] = useState({});
   const [statusMessage, setStatusMessage] = useState("");
+  const isHomeLayout = layoutMode === "home";
 
   useEffect(() => {
     if (!topCategoryEntries.includes(activeCategory)) {
@@ -931,6 +954,24 @@ const MeamoSkinBoostersArchive = ({ initialCategory = "" }) => {
   ]);
 
   const visibleProducts = filteredProducts.slice(0, showCount);
+  const featuredHomeProducts = useMemo(
+    () => catalogSourceProducts.slice(0, 8),
+    [catalogSourceProducts]
+  );
+  const homeCategoryCards = useMemo(
+    () => topCategoryEntries.slice(0, 8),
+    [topCategoryEntries]
+  );
+  const categoryCountBySlug = useMemo(() => {
+    const counts = {};
+    for (const item of catalogSourceProducts) {
+      const rawCategory = String(item?.children || item?.category?.name || "").trim();
+      const key = toSlug(rawCategory);
+      if (!key) continue;
+      counts[key] = (counts[key] || 0) + 1;
+    }
+    return counts;
+  }, [catalogSourceProducts]);
   const currentHero = heroSlides[activeHeroSlide] || heroSlides[0];
 
   const handlePrevHero = () => {
@@ -1014,117 +1055,180 @@ const MeamoSkinBoostersArchive = ({ initialCategory = "" }) => {
         onStatus={setStatusMessage}
       />
       <main>
-        <section className={styles.frontHeroSection}>
-          <div className={styles.container}>
-            <article
-              className={styles.frontHeroCard}
-              style={{ backgroundImage: `url(${currentHero.background})` }}
-            >
-              <div className={styles.frontHeroOverlay} />
-              <button
-                type="button"
-                aria-label="Previous slide"
-                className={`${styles.frontHeroArrow} ${styles.frontHeroArrowLeft}`}
-                onClick={handlePrevHero}
+        {showFrontHero && (
+          <section className={styles.frontHeroSection}>
+            <div className={styles.container}>
+              <article
+                className={styles.frontHeroCard}
+                style={{ backgroundImage: `url(${currentHero.background})` }}
               >
-                ‹
-              </button>
-              <button
-                type="button"
-                aria-label="Next slide"
-                className={`${styles.frontHeroArrow} ${styles.frontHeroArrowRight}`}
-                onClick={handleNextHero}
-              >
-                ›
-              </button>
-
-              <div className={styles.frontHeroContent}>
-                <p className={styles.heroTrustRow}>
-                  <strong>{currentHero.trust}</strong>
-                  <span className={styles.heroTrustStars}>★★★★★</span>
-                  <span>{currentHero.trustBrand}</span>
-                </p>
-                <span className={styles.heroKicker}>{currentHero.kicker}</span>
-                <h2>
-                  {currentHero.titleLine1}
-                  <span>{currentHero.titleLine2}</span>
-                </h2>
-                <p>{currentHero.description}</p>
-                <button type="button" className={styles.heroCtaButton}>
-                  {currentHero.cta}
+                <div className={styles.frontHeroOverlay} />
+                <button
+                  type="button"
+                  aria-label="Previous slide"
+                  className={`${styles.frontHeroArrow} ${styles.frontHeroArrowLeft}`}
+                  onClick={handlePrevHero}
+                >
+                  ‹
                 </button>
-              </div>
+                <button
+                  type="button"
+                  aria-label="Next slide"
+                  className={`${styles.frontHeroArrow} ${styles.frontHeroArrowRight}`}
+                  onClick={handleNextHero}
+                >
+                  ›
+                </button>
 
-              <div className={styles.frontHeroProductWrap}>
-                <img src={currentHero.productImage} alt={currentHero.productAlt} />
-              </div>
+                <div className={styles.frontHeroContent}>
+                  <p className={styles.heroTrustRow}>
+                    <strong>{currentHero.trust}</strong>
+                    <span className={styles.heroTrustStars}>★★★★★</span>
+                    <span>{currentHero.trustBrand}</span>
+                  </p>
+                  <span className={styles.heroKicker}>{currentHero.kicker}</span>
+                  <h2>
+                    {currentHero.titleLine1}
+                    <span>{currentHero.titleLine2}</span>
+                  </h2>
+                  <p>{currentHero.description}</p>
+                  <button type="button" className={styles.heroCtaButton}>
+                    {currentHero.cta}
+                  </button>
+                </div>
 
-              <div className={styles.frontHeroDots} aria-label="Slide indicators">
-                {heroSlides.map((slide, index) => (
-                  <button
-                    key={slide.id}
-                    type="button"
-                    aria-label={`Go to slide ${index + 1}`}
-                    className={index === activeHeroSlide ? styles.dotActive : ""}
-                    onClick={() => setActiveHeroSlide(index)}
-                  />
-                ))}
-              </div>
-            </article>
+                <div className={styles.frontHeroProductWrap}>
+                  <img src={currentHero.productImage} alt={currentHero.productAlt} />
+                </div>
 
-            <div className={styles.heroFeatureRow}>
-              <article className={styles.heroFeatureCard}>
-                <span>◉</span>
-                <div>
-                  <h3>Secure Credit Card Payments</h3>
-                  <p>Easy and hassle-free payments</p>
+                <div className={styles.frontHeroDots} aria-label="Slide indicators">
+                  {heroSlides.map((slide, index) => (
+                    <button
+                      key={slide.id}
+                      type="button"
+                      aria-label={`Go to slide ${index + 1}`}
+                      className={index === activeHeroSlide ? styles.dotActive : ""}
+                      onClick={() => setActiveHeroSlide(index)}
+                    />
+                  ))}
                 </div>
               </article>
-              <article className={styles.heroFeatureCard}>
-                <span>▣</span>
-                <div>
-                  <h3>Free Shipping</h3>
-                  <p>Free shipping for 300$ orders</p>
-                </div>
-              </article>
-              <article className={styles.heroFeatureCard}>
-                <span>%</span>
-                <div>
-                  <h3>Discounts &amp; Fair Prices</h3>
-                  <p>Get the highest value possible</p>
-                </div>
-              </article>
+
+              <div className={styles.heroFeatureRow}>
+                <article className={styles.heroFeatureCard}>
+                  <span>◉</span>
+                  <div>
+                    <h3>Secure Credit Card Payments</h3>
+                    <p>Easy and hassle-free payments</p>
+                  </div>
+                </article>
+                <article className={styles.heroFeatureCard}>
+                  <span>▣</span>
+                  <div>
+                    <h3>Free Shipping</h3>
+                    <p>Free shipping for 300$ orders</p>
+                  </div>
+                </article>
+                <article className={styles.heroFeatureCard}>
+                  <span>%</span>
+                  <div>
+                    <h3>Discounts &amp; Fair Prices</h3>
+                    <p>Get the highest value possible</p>
+                  </div>
+                </article>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        <section className={styles.archiveHero}>
-          <div className={styles.container}>
-            <h1 className={styles.archiveTitle}>{activeCategory}</h1>
-            <div className={styles.topCategoryGrid}>
-              <h2>Categories</h2>
-              <ul>
-                {topCategoryEntries.map((name) => (
-                  <li key={name}>
-                    <Link
-                      href={buildCategoryRoute(name)}
-                      className={activeCategory === name ? styles.activeCategory : ""}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        navigateCategory(name);
-                        setStatusMessage(`${name} category selected.`);
-                      }}
-                    >
-                      <span>{name}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
+        {isHomeLayout ? (
+          <>
+            <section className={styles.homeCategorySection}>
+              <div className={styles.container}>
+                <div className={styles.homeCategoryHeader}>
+                  <div>
+                    <p>Showing top beauty categories</p>
+                    <h2>Shop Korean Botox &amp; Beauty Products</h2>
+                  </div>
+                  <div className={styles.homeCategoryStat}>
+                    <strong>300+</strong>
+                    <span>Products</span>
+                  </div>
+                </div>
+                <div className={styles.homeCategoryGrid}>
+                  {homeCategoryCards.map((name) => {
+                    const slug = toSlug(name);
+                    const image =
+                      homeCategoryImageBySlug[slug] ||
+                      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1200&q=80";
+                    const count = categoryCountBySlug[slug] || 0;
 
-        <section className={styles.shopShell}>
+                    return (
+                      <Link
+                        key={name}
+                        href={buildCategoryRoute(name)}
+                        className={styles.homeCategoryCard}
+                        style={{ backgroundImage: `url(${image})` }}
+                      >
+                        <span>{name}</span>
+                        <small>{count} products</small>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            </section>
+
+            <section className={styles.homeCollectionSection}>
+              <div className={styles.container}>
+                <h2 className={styles.homeCollectionTitle}>Newly Curated</h2>
+                <div className={styles.productGrid}>
+                  {featuredHomeProducts.map((product) => (
+                    <ProductCard
+                      key={product._id}
+                      product={product}
+                      quantity={quantities[product._id] || 1}
+                      isWishlisted={wishlist.some((item) => item._id === product._id)}
+                      onQuantityChange={updateQuantity}
+                      onAddToCart={handleAddToCart}
+                      onCompare={handleCompare}
+                      onQuickView={(item) => dispatch(handleProductModal(item))}
+                      onWishlist={handleWishlist}
+                    />
+                  ))}
+                </div>
+              </div>
+            </section>
+          </>
+        ) : (
+          <>
+            <section className={styles.archiveHero}>
+              <div className={styles.container}>
+                <h1 className={styles.archiveTitle}>{activeCategory}</h1>
+                <div className={styles.topCategoryGrid}>
+                  <h2>Categories</h2>
+                  <ul>
+                    {topCategoryEntries.map((name) => (
+                      <li key={name}>
+                        <Link
+                          href={buildCategoryRoute(name)}
+                          className={activeCategory === name ? styles.activeCategory : ""}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            navigateCategory(name);
+                            setStatusMessage(`${name} category selected.`);
+                          }}
+                        >
+                          <span>{name}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <section className={styles.shopShell}>
           <aside className={styles.sidebar}>
             <div className={styles.filterCard}>
               <h2><span aria-hidden="true">≡</span> Filters</h2>
@@ -1359,7 +1463,9 @@ const MeamoSkinBoostersArchive = ({ initialCategory = "" }) => {
               </div>
             )}
           </div>
-        </section>
+            </section>
+          </>
+        )}
       </main>
     </div>
   );
