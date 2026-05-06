@@ -13,6 +13,7 @@ import { handleProductModal } from "@/redux/features/productModalSlice";
 import { add_to_wishlist } from "@/redux/features/wishlist-slice";
 import { useGetShowCategoryQuery } from "@/redux/features/categoryApi";
 import { useGetShopProductsQuery } from "@/redux/features/productApi";
+import { buildProductPath } from "@/utils/seo-utils";
 import { toSlug } from "@/utils/slug";
 import styles from "@/styles/meamo-skin-boosters.module.css";
 
@@ -423,8 +424,11 @@ const ProductCard = ({
   onCompare,
   onQuickView,
   onWishlist,
-}) => (
-  <article className={styles.productCard}>
+}) => {
+  const productHref = buildProductPath(product);
+
+  return (
+    <article className={styles.productCard}>
     <div className={styles.badgeStack}>
       {product.badge && <span className={styles.discountBadge}>{product.badge}</span>}
       {product.flags?.map((flag) => (
@@ -434,7 +438,7 @@ const ProductCard = ({
       ))}
     </div>
 
-    <Link href="/product-details" className={styles.imageBox}>
+    <Link href={productHref} className={styles.imageBox}>
       <img src={product.image} alt={product.name} />
     </Link>
 
@@ -463,13 +467,13 @@ const ProductCard = ({
     </div>
 
     <h3>
-      <Link href="/product-details">{product.name}</Link>
+      <Link href={productHref}>{product.name}</Link>
     </h3>
 
     <div className={styles.ratingRow}>
       <span className={styles.stars}>★★★★★</span>
       <span>Rated {product.rating} out of 5</span>
-      <Link href="/product-details">({product.reviews})</Link>
+      <Link href={productHref}>({product.reviews})</Link>
     </div>
 
     <div className={styles.priceLine}>
@@ -501,8 +505,9 @@ const ProductCard = ({
     <button type="button" className={styles.cartButton} onClick={() => onAddToCart(product)}>
       {product.action}
     </button>
-  </article>
-);
+    </article>
+  );
+};
 
 const FilterRow = ({ label, value, expanded, onToggle, children }) => (
   <section className={styles.filterGroup}>
