@@ -1,7 +1,45 @@
-import Image from "next/image";
 import { useState } from "react";
 import PopupVideo from "../common/popup-video";
 import { getProductImageAlt } from "@/utils/seo-utils";
+
+const IMAGE_FALLBACK_SRC = "/assets/img/product/product-1.jpg";
+
+const toSafeImageSrc = (value) => {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+
+  if (raw.startsWith("//")) {
+    return `https:${raw}`;
+  }
+
+  return raw;
+};
+
+const ProductGalleryImage = ({
+  src,
+  alt,
+  className,
+  width,
+  height,
+  loading = "lazy",
+}) => {
+  const safeSrc = toSafeImageSrc(src) || IMAGE_FALLBACK_SRC;
+  return (
+    <img
+      src={safeSrc}
+      alt={alt}
+      width={width}
+      height={height}
+      className={className}
+      loading={loading}
+      decoding="async"
+      onError={(event) => {
+        if (event.currentTarget.src.endsWith(IMAGE_FALLBACK_SRC)) return;
+        event.currentTarget.src = IMAGE_FALLBACK_SRC;
+      }}
+    />
+  );
+};
 
 const DetailsThumbWrapper = ({
   imageURLs,
@@ -15,11 +53,14 @@ const DetailsThumbWrapper = ({
   product,
 }) => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const galleryItems = imageURLs?.length
-    ? imageURLs
-    : activeImg
-      ? [{ img: activeImg }]
-      : [];
+  const galleryItems = (imageURLs?.length ? imageURLs : activeImg ? [{ img: activeImg }] : [])
+    .map((item) => ({
+      ...item,
+      img: toSafeImageSrc(item?.img),
+    }))
+    .filter((item) => Boolean(item?.img));
+  const resolvedActiveImg = toSafeImageSrc(activeImg) || galleryItems[0]?.img || IMAGE_FALLBACK_SRC;
+  const activeImageKey = resolvedActiveImg;
   const imageAlt = getProductImageAlt(product);
 
   if (quickViewMode) {
@@ -29,14 +70,15 @@ const DetailsThumbWrapper = ({
           <div className="tab-content m-img aura-qv-main-media">
             <div className="tab-pane fade show active">
               <div className="tp-product-details-nav-main-thumb aura-qv-main-thumb p-relative">
-                {activeImg && (
-                  <Image
-                    key={activeImg}
-                    src={activeImg}
+                {resolvedActiveImg && (
+                  <ProductGalleryImage
+                    key={resolvedActiveImg}
+                    src={resolvedActiveImg}
                     alt={imageAlt}
                     width={imgWidth}
                     height={imgHeight}
                     className="aura-qv-main-image"
+                    loading="eager"
                   />
                 )}
                 <div className="tp-product-badge">
@@ -51,11 +93,11 @@ const DetailsThumbWrapper = ({
               {galleryItems.map((item, i) => (
                 <button
                   key={i}
-                  className={`nav-link aura-qv-thumb-btn ${item.img === activeImg ? "active" : ""}`}
+                  className={`nav-link aura-qv-thumb-btn ${item.img === activeImageKey ? "active" : ""}`}
                   onClick={() => handleImageActive(item)}
                   type="button"
                 >
-                  <Image
+                  <ProductGalleryImage
                     src={item.img}
                     alt={imageAlt}
                     width={96}
@@ -79,10 +121,10 @@ const DetailsThumbWrapper = ({
             {galleryItems?.map((item, i) => (
               <button
                 key={i}
-                className={`nav-link aura-pdp-thumb-btn ${item.img === activeImg ? "active" : ""}`}
+                className={`nav-link aura-pdp-thumb-btn ${item.img === activeImageKey ? "active" : ""}`}
                 onClick={() => handleImageActive(item)}
               >
-                <Image
+                <ProductGalleryImage
                   src={item.img}
                   alt={imageAlt}
                   width={78}
@@ -96,12 +138,13 @@ const DetailsThumbWrapper = ({
         <div className="tab-content m-img aura-pdp-main-wrap">
           <div className="tab-pane fade show active">
             <div className="tp-product-details-nav-main-thumb p-relative aura-pdp-main-thumb">
-              <Image
-                src={activeImg}
+              <ProductGalleryImage
+                src={resolvedActiveImg}
                 alt={imageAlt}
                 width={imgWidth}
                 height={imgHeight}
                 className="aura-pdp-main-image"
+                loading="eager"
               />
               <div className="tp-product-badge">
                 {status === 'out-of-stock' && <span className="product-hot">out-stock</span>}

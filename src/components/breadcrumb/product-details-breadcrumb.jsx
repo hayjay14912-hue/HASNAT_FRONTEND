@@ -1,27 +1,26 @@
 import React from 'react';
-import { SmDot } from '@/svg';
+import Link from "next/link";
 
-const ProductDetailsBreadcrumb = ({category,title}) => {
+const ProductDetailsBreadcrumb = ({ category, title }) => {
+  const safeCategory = String(category || "Products").trim();
+  const safeCategorySlug = safeCategory
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/\s+/g, "-");
+
   return (
-    <section className="breadcrumb__area breadcrumb__style-2 include-bg pt-50 pb-20">
-    <div className="container">
-       <div className="row">
-          <div className="col-xxl-12">
-             <div className="breadcrumb__content p-relative z-index-1">
-                <div className="breadcrumb__list has-icon">
-                   <span className="breadcrumb-icon">
-                      <SmDot/>{" "}
-                   </span>
-                   <span><a href="#">Home</a></span>
-                   <span><a href="#">{category}</a></span>
-                   <span>{title}</span>
-                </div>
-             </div>
-          </div>
-       </div>
-    </div>
- </section>
-  );
+    <section className="aura-pdp-breadcrumb">
+      <div className="container">
+        <nav className="aura-pdp-breadcrumb-list" aria-label="Breadcrumb">
+          <Link href="/">Home</Link>
+          <span>/</span>
+          <Link href={`/shop?category=${encodeURIComponent(safeCategorySlug)}`}>{safeCategory}</Link>
+          <span>/</span>
+          <strong>{title}</strong>
+        </nav>
+      </div>
+    </section>
+  )
 };
 
 export default ProductDetailsBreadcrumb;

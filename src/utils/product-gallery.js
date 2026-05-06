@@ -1,28 +1,88 @@
+const normalizeUrl = (value) => {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+
+  if (raw.startsWith("//")) {
+    return `https:${raw}`;
+  }
+
+  if (
+    raw.startsWith("/") ||
+    raw.startsWith("http://") ||
+    raw.startsWith("https://") ||
+    raw.startsWith("data:") ||
+    raw.startsWith("blob:")
+  ) {
+    return raw;
+  }
+
+  if (/^[a-z0-9.-]+\.[a-z]{2,}\//i.test(raw)) {
+    return `https://${raw}`;
+  }
+
+  return raw;
+};
+
+const readObjectImageUrl = (item) => {
+  if (!item || typeof item !== "object") return "";
+
+  const directCandidate =
+    item.img ??
+    item.url ??
+    item.src ??
+    item.image ??
+    item.imageUrl ??
+    item.originalSrc ??
+    item.original ??
+    item.secure_url ??
+    item.thumbnail ??
+    item.medium ??
+    item.large ??
+    item.path;
+
+  if (typeof directCandidate === "string") {
+    return directCandidate;
+  }
+
+  const nestedCandidate =
+    item.file?.url ??
+    item.asset?.url ??
+    item.node?.url ??
+    item.media?.url ??
+    item.media?.src ??
+    item.image?.url ??
+    item.image?.src;
+
+  return typeof nestedCandidate === "string" ? nestedCandidate : "";
+};
+
 const toCleanImage = (item) => {
   if (!item) return null;
+
   if (typeof item === "string") {
-    const img = item.trim();
+    const img = normalizeUrl(item);
     return img ? { img } : null;
   }
-  if (typeof item === "object" && typeof item.img === "string") {
-    const img = item.img.trim();
+
+  if (typeof item === "object") {
+    const img = normalizeUrl(readObjectImageUrl(item));
     return img ? { ...item, img } : null;
   }
+
   return null;
 };
 
 export const buildProductGallery = (productItem) => {
-  const primaryImg = typeof productItem?.img === "string" ? productItem.img.trim() : "";
-  const rawGallery = Array.isArray(productItem?.imageURLs) ? productItem.imageURLs : [];
-  const cleanedGallery = rawGallery.map(toCleanImage).filter(Boolean);
+  const primaryImg = normalizeUrl(productItem?.img);
+  const rawGallerySources = [
+    Array.isArray(productItem?.imageURLs) ? productItem.imageURLs : [],
+    Array.isArray(productItem?.images) ? productItem.images : [],
+    Array.isArray(productItem?.gallery) ? productItem.gallery : [],
+    Array.isArray(productItem?.media) ? productItem.media : [],
+  ];
+  const cleanedGallery = rawGallerySources.flat().map(toCleanImage).filter(Boolean);
 
   if (!primaryImg && cleanedGallery.length === 0) return [];
-
-  // Guard for bad data: if only one gallery image exists but it differs from primary,
-  // keep primary only (prevents stale images from another product appearing in quick view).
-  if (primaryImg && cleanedGallery.length === 1 && cleanedGallery[0].img !== primaryImg) {
-    return [{ ...cleanedGallery[0], img: primaryImg }];
-  }
 
   const seen = new Set();
   const merged = [];

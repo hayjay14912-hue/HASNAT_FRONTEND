@@ -5131,8 +5131,41 @@ body.aura-qv-open {
     linear-gradient(180deg, #fffdfa 0%, #fff8ef 100%);
 }
 
+.aura-pdp-breadcrumb {
+  border-top: 1px solid rgba(36, 31, 26, 0.08);
+  border-bottom: 1px solid rgba(36, 31, 26, 0.08);
+  background: #fff;
+}
+
+.aura-pdp-breadcrumb-list {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #6a5f54;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.aura-pdp-breadcrumb-list a {
+  color: #6a5f54;
+}
+
+.aura-pdp-breadcrumb-list a:hover {
+  color: #1f1812;
+}
+
+.aura-pdp-breadcrumb-list strong {
+  color: #1f1812;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .aura-pdp-top {
-  padding-top: 70px;
+  padding-top: 54px;
   padding-bottom: 104px !important;
 }
 
@@ -5245,10 +5278,12 @@ body.aura-qv-open {
 }
 
 .aura-pdp-panel .tp-product-details-title {
-  font-size: clamp(36px, 4vw, 56px);
-  line-height: 0.95;
+  font-family: var(--aura-font-body) !important;
+  font-size: clamp(36px, 3.6vw, 62px);
+  line-height: 0.98;
   margin-bottom: 14px;
   color: #231911;
+  letter-spacing: -0.01em;
 }
 
 .aura-pdp-panel .tp-product-details-inventory {
@@ -5358,9 +5393,11 @@ body.aura-qv-open {
 }
 
 .aura-pdp-panel .tp-product-details-price.new-price {
-  font-size: clamp(34px, 3vw, 46px);
+  font-family: var(--aura-font-body) !important;
+  font-size: clamp(40px, 3.5vw, 60px);
   font-weight: 700;
   color: #241a12;
+  letter-spacing: -0.02em;
 }
 
 .aura-pdp-panel .tp-product-details-price-wrapper.is-inquiry {
@@ -7119,5 +7156,735 @@ body.aura-qv-open {
   .aura-featured-offer-cta {
     width: 100%;
     text-align: left;
+  }
+}
+
+/* Meamo-inspired storefront shell */
+.meamo-shell-header {
+  background: #ffffff;
+  position: relative;
+  z-index: 91;
+  overflow-x: clip;
+}
+
+.meamo-shell-topbar {
+  background: #111111;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.meamo-shell-topbar-inner {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.meamo-shell-topbar-inner p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.meamo-shell-topbar-right,
+.meamo-shell-social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.meamo-shell-topbar-right > a,
+.meamo-shell-social a {
+  color: rgba(255, 255, 255, 0.86);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.meamo-shell-topbar-right > a:hover,
+.meamo-shell-social a:hover {
+  color: #99c8b5;
+}
+
+.meamo-shell-nav {
+  position: sticky;
+  top: 0;
+  z-index: 88;
+  background: #ffffff;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.meamo-shell-nav.is-sticky {
+  box-shadow: 0 10px 26px rgba(17, 17, 17, 0.08);
+}
+
+.meamo-shell-main {
+  min-height: 86px;
+  display: grid;
+  grid-template-columns: minmax(150px, 210px) minmax(360px, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+}
+
+.meamo-shell-brand {
+  display: grid;
+  gap: 2px;
+}
+
+.meamo-shell-brand a {
+  text-decoration: none;
+}
+
+.meamo-shell-brand .aura-logo-wordmark-nav {
+  color: #111111;
+  font-family: "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 33px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.meamo-shell-brand > span {
+  color: #777777;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.meamo-shell-search {
+  position: relative;
+  width: 100%;
+  align-items: stretch;
+  border: 1px solid #dedede;
+  background: #ffffff;
+  border-radius: 4px;
+}
+
+.meamo-shell-select {
+  min-width: 170px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-right: 1px solid #dedede;
+  color: #555555;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.meamo-shell-search-field,
+.meamo-shell-search-field form {
+  width: 100%;
+}
+
+.meamo-shell-search form,
+.meamo-shell-mobile-search form {
+  display: flex;
+  min-height: 48px;
+  margin: 0;
+}
+
+.meamo-shell-search input,
+.meamo-shell-mobile-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  padding: 0 16px;
+  color: #242424;
+  font-size: 14px;
+  background: transparent;
+}
+
+.meamo-shell-search button,
+.meamo-shell-mobile-search button {
+  width: 54px;
+  flex: 0 0 54px;
+  border: 0;
+  border-left: 1px solid #dedede;
+  background: #222222;
+  color: #ffffff;
+  transition: background 0.2s ease;
+}
+
+.meamo-shell-search button:hover,
+.meamo-shell-mobile-search button:hover {
+  background: #3f7560;
+}
+
+.meamo-shell-search button svg,
+.meamo-shell-mobile-search button svg,
+.meamo-shell-action svg,
+.meamo-shell-cart svg,
+.meamo-shell-menu svg,
+.meamo-shell-category-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.meamo-shell-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.meamo-shell-action {
+  position: relative;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  color: #222222;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.meamo-shell-action strong {
+  min-width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #3f7560;
+  color: #ffffff;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.meamo-shell-cart,
+.meamo-shell-menu {
+  min-height: 44px;
+  border: 1px solid #222222;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 13px;
+  background: #222222;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.meamo-shell-menu {
+  width: 44px;
+  padding: 0;
+  background: #ffffff;
+  color: #222222;
+}
+
+.meamo-shell-menu-row {
+  position: relative;
+  z-index: 83;
+  background: #ffffff;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.meamo-shell-menu-inner {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.meamo-shell-category-wrap {
+  position: relative;
+  flex: 0 0 250px;
+}
+
+.meamo-shell-category-btn {
+  width: 100%;
+  min-height: 52px;
+  border: 0;
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #f6f6f6;
+  color: #111111;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.meamo-shell-category-panel {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  width: 100%;
+  max-height: 420px;
+  overflow: auto;
+  display: none;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 18px 36px rgba(17, 17, 17, 0.12);
+}
+
+.meamo-shell-category-panel.is-open {
+  display: grid;
+}
+
+.meamo-shell-category-panel a {
+  padding: 12px 18px;
+  border-bottom: 1px solid #eeeeee;
+  color: #343434;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.meamo-shell-category-panel a:hover {
+  background: #f3f8f5;
+  color: #2e6b55;
+}
+
+.meamo-shell-links {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.meamo-shell-links::-webkit-scrollbar {
+  display: none;
+}
+
+.meamo-shell-links a {
+  color: #202020;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.meamo-shell-links a:hover {
+  color: #3f7560;
+}
+
+.meamo-shell-mobile {
+  padding: 12px 0 14px;
+  border-bottom: 1px solid #e7e7e7;
+  background: #ffffff;
+}
+
+.meamo-shell-mobile-search {
+  position: relative;
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.meamo-shell-mobile-links {
+  margin-top: 12px;
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+}
+
+.meamo-shell-mobile-links a {
+  flex: 0 0 auto;
+  color: #202020;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.meamo-shell-search .aura-search-suggestions,
+.meamo-shell-mobile-search .aura-search-suggestions {
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+.meamo-footer {
+  background: #151515;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.meamo-footer-help {
+  background: #f6f6f6;
+  color: #222222;
+  border-top: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.meamo-footer-help-inner {
+  min-height: 112px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.meamo-footer-help span,
+.meamo-footer-newsletter span {
+  display: block;
+  margin-bottom: 4px;
+  color: #151515;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.meamo-footer-help p,
+.meamo-footer-newsletter p {
+  margin: 0;
+  color: #656565;
+  font-size: 14px;
+}
+
+.meamo-footer-help-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.meamo-footer-help-actions a,
+.meamo-footer-newsletter button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0 18px;
+  background: #202020;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.meamo-footer-help-actions a + a {
+  background: #ffffff;
+  color: #202020;
+  border: 1px solid #d7d7d7;
+}
+
+.meamo-footer-newsletter {
+  background: #ffffff;
+  color: #202020;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.meamo-footer-newsletter-inner {
+  min-height: 118px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.meamo-footer-newsletter form {
+  width: min(100%, 520px);
+  display: flex;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.meamo-footer-newsletter input {
+  width: 100%;
+  min-height: 50px;
+  border: 0;
+  outline: 0;
+  padding: 0 16px;
+  color: #202020;
+}
+
+.meamo-footer-newsletter button {
+  border: 0;
+  border-radius: 0;
+  background: #3f7560;
+}
+
+.meamo-footer-main {
+  padding: 64px 0 0;
+  background: #151515;
+}
+
+.meamo-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.4fr) repeat(4, minmax(140px, 1fr));
+  gap: 38px;
+}
+
+.meamo-footer-brand .aura-logo-wordmark-footer {
+  color: #ffffff;
+  font-family: "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 31px;
+  letter-spacing: 0.03em;
+}
+
+.meamo-footer-brand p {
+  max-width: 360px;
+  margin: 18px 0 22px;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.7;
+}
+
+.meamo-footer-contact-list {
+  display: grid;
+  gap: 11px;
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+}
+
+.meamo-footer-contact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.meamo-footer-contact-list svg {
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  color: #99c8b5;
+  flex: 0 0 16px;
+}
+
+.meamo-footer-contact-list a {
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+}
+
+.meamo-footer-social {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.meamo-footer-social a {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.meamo-footer-social a:hover {
+  border-color: #99c8b5;
+  background: #99c8b5;
+  color: #111111;
+}
+
+.meamo-footer-widget h4 {
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-family: var(--aura-font-body) !important;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.meamo-footer-widget ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.meamo-footer-widget a {
+  color: rgba(255, 255, 255, 0.68);
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.45;
+  transition: color 0.2s ease;
+}
+
+.meamo-footer-widget a:hover {
+  color: #99c8b5;
+}
+
+.meamo-footer-bottom {
+  margin-top: 54px;
+  min-height: 76px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.meamo-footer-bottom p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+}
+
+.meamo-footer-payment {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 13px;
+}
+
+.meamo-footer-payment img {
+  max-width: 220px;
+  height: auto;
+  filter: brightness(1.15);
+}
+
+@media (max-width: 1199px) {
+  .meamo-shell-main {
+    grid-template-columns: minmax(150px, 200px) 1fr auto;
+    gap: 18px;
+  }
+
+  .meamo-shell-search {
+    min-width: 0;
+  }
+
+  .meamo-shell-links {
+    gap: 22px;
+  }
+
+  .meamo-footer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .meamo-footer-brand {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 991px) {
+  .meamo-shell-header .container {
+    width: 100%;
+    max-width: none;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .meamo-shell-topbar-inner {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .meamo-shell-topbar-inner p {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .meamo-shell-topbar-right {
+    display: none;
+  }
+
+  .meamo-shell-main {
+    min-height: 74px;
+    grid-template-columns: 1fr auto;
+  }
+
+  .meamo-shell-actions {
+    gap: 8px;
+  }
+
+  .meamo-shell-brand .aura-logo-wordmark-nav {
+    font-size: 28px;
+  }
+
+  .meamo-footer-help-inner,
+  .meamo-footer-newsletter-inner {
+    padding: 26px 0;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .meamo-footer-help-actions,
+  .meamo-footer-newsletter form {
+    width: 100%;
+  }
+
+  .meamo-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .meamo-footer-brand {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 576px) {
+  .meamo-shell-topbar-inner {
+    min-height: 34px;
+    font-size: 11px;
+  }
+
+  .meamo-shell-main {
+    min-height: 66px;
+    gap: 12px;
+  }
+
+  .meamo-shell-brand > span {
+    font-size: 9px;
+  }
+
+  .meamo-shell-cart span {
+    display: none;
+  }
+
+  .meamo-shell-cart,
+  .meamo-shell-menu {
+    width: 42px;
+    min-height: 42px;
+    padding: 0;
+  }
+
+  .meamo-footer-help span,
+  .meamo-footer-newsletter span {
+    font-size: 21px;
+  }
+
+  .meamo-footer-help-actions,
+  .meamo-footer-newsletter form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .meamo-footer-newsletter button {
+    min-height: 48px;
+  }
+
+  .meamo-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .meamo-footer-brand {
+    grid-column: span 1;
+  }
+
+  .meamo-footer-bottom {
+    padding: 22px 0;
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
