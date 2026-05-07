@@ -842,6 +842,10 @@ const MeamoSkinBoostersArchive = ({
     if (/microneedling/i.test(name)) addAlias("needle");
     if (/hair treatment/i.test(name)) addAlias("hair");
     if (/botulinum toxins?/i.test(name)) addAlias("toxins");
+    if (/exosomes?/i.test(name)) {
+      addAlias("exosome");
+      addAlias("exosomes");
+    }
 
     return Array.from(aliases);
   }, [activeCategory, activeCategoryRecord]);
