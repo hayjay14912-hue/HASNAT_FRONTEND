@@ -114,6 +114,7 @@ const extractCategoryRecords = (payload) => {
         id: String(item?._id || item?.id || "").trim(),
         name,
         slug: toSlug(name),
+        img: String(item?.img || "").trim(),
         parent: String(item?.parent || item?.name || "").trim(),
         children: Array.isArray(item?.children)
           ? item.children.map((child) => String(child || "").trim()).filter(Boolean)
@@ -972,6 +973,27 @@ const MeamoSkinBoostersArchive = ({
     }
     return counts;
   }, [catalogSourceProducts]);
+  const categoryImageBySlug = useMemo(() => {
+    const images = {};
+
+    backendCategoryRecords.forEach((record) => {
+      const key = toSlug(record?.name || record?.parent || "");
+      const image = String(record?.img || "").trim();
+      if (key && image) {
+        images[key] = image;
+      }
+    });
+
+    catalogSourceProducts.forEach((item) => {
+      const key = toSlug(item?.children || item?.category?.name || item?.parent || "");
+      const image = String(item?.img || item?.image || "").trim();
+      if (key && image && !images[key]) {
+        images[key] = image;
+      }
+    });
+
+    return images;
+  }, [backendCategoryRecords, catalogSourceProducts]);
   const currentHero = heroSlides[activeHeroSlide] || heroSlides[0];
 
   const handlePrevHero = () => {
@@ -1159,6 +1181,7 @@ const MeamoSkinBoostersArchive = ({
                   {homeCategoryCards.map((name) => {
                     const slug = toSlug(name);
                     const image =
+                      categoryImageBySlug[slug] ||
                       homeCategoryImageBySlug[slug] ||
                       "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1200&q=80";
                     const count = categoryCountBySlug[slug] || 0;
