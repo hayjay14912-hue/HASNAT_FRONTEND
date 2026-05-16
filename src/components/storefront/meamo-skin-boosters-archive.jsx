@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { CartTwo, CategoryMenu, Compare, Search, User, Wishlist } from "@/svg";
+import { CartTwo, CategoryMenu, Compare, QuickView, Search, User, Wishlist } from "@/svg";
 import {
   add_cart_product,
   configureOrderQuantity,
@@ -18,50 +18,6 @@ import { buildProductPath } from "@/utils/seo-utils";
 import { toSlug } from "@/utils/slug";
 import { buildCategoryRoute } from "@/utils/meamo-category-routes";
 import styles from "@/styles/meamo-skin-boosters.module.css";
-
-const topCategories = [
-  "Botulinum Toxins",
-  "Dermal Fillers",
-  "Korean Skin Boosters",
-  "Body Fillers",
-  "Numbing Cream",
-  "Devices & Disposables",
-  "Sets",
-  "Health Boosters",
-  "Korean Skincare",
-  "Lifting Thread",
-  "Clearance",
-  "Contouring Serums",
-  "Newly Curated",
-  "Meamo Labs",
-  "Collagen Stimulators",
-  "CE Certified",
-  "Microneedling",
-  "Hair Treatment",
-];
-
-const sidebarCategories = [
-  "Korean Skin Boosters",
-  "Body Fillers",
-  "Botulinum Toxins",
-  "CE Certified",
-  "Clearance",
-  "Collagen Stimulators",
-  "Contouring Serums",
-  "Dermal Fillers",
-  "Devices & Disposables",
-  "Hair Treatment",
-  "Injections",
-  "Korean Skin Boosters",
-  "Korean Skincare",
-  "Lifting Thread",
-  "Meamo Labs",
-  "Microneedling",
-  "Newly Curated",
-  "Numbing Cream",
-  "Sets",
-  "Uncategorized",
-];
 
 const extractCategoryNames = (payload) => {
   const source = Array.isArray(payload?.result)
@@ -464,7 +420,7 @@ const catalogProducts = products.map((product, index) => {
 
 const ActionRoundButton = ({ children, label, onClick }) => (
   <button type="button" className={styles.iconButton} aria-label={label} onClick={onClick}>
-    {children}
+    <span className={styles.actionGlyph}>{children}</span>
   </button>
 );
 
@@ -496,26 +452,31 @@ const ProductCard = ({
     </Link>
 
     <div className={styles.actionColumn}>
-      <button type="button" onClick={() => onCompare(product)}>
-        Add to compare
+      <button type="button" aria-label={`Compare ${product.name}`} onClick={() => onCompare(product)}>
+        <span className={styles.actionGlyph}><Compare /></span>
       </button>
-      <button type="button" onClick={() => onQuickView(product)}>
-        Quick view
+      <button type="button" aria-label={`Quick view ${product.name}`} onClick={() => onQuickView(product)}>
+        <span className={styles.actionGlyph}><QuickView /></span>
       </button>
-      <button type="button" onClick={() => onWishlist(product)}>
-        {isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+      <button
+        type="button"
+        aria-label={`${isWishlisted ? "Remove from" : "Add to"} wishlist ${product.name}`}
+        className={isWishlisted ? styles.actionButtonActive : ""}
+        onClick={() => onWishlist(product)}
+      >
+        <span className={styles.actionGlyph}><Wishlist /></span>
       </button>
     </div>
 
     <div className={styles.mobileActions} aria-label="Product actions">
       <ActionRoundButton label={`Compare ${product.name}`} onClick={() => onCompare(product)}>
-        +
+        <Compare />
       </ActionRoundButton>
       <ActionRoundButton label={`Quick view ${product.name}`} onClick={() => onQuickView(product)}>
-        o
+        <QuickView />
       </ActionRoundButton>
       <ActionRoundButton label={`${isWishlisted ? "Remove from" : "Add to"} wishlist ${product.name}`} onClick={() => onWishlist(product)}>
-        ♡
+        <Wishlist />
       </ActionRoundButton>
     </div>
 
@@ -704,10 +665,7 @@ const MeamoSkinBoostersArchive = ({
         .filter((item) => Boolean(item.img && item.title)),
     [shopProductsRaw]
   );
-  const catalogSourceProducts =
-    mappedLiveProducts.length > 0
-      ? mappedLiveProducts
-      : catalogProducts;
+  const catalogSourceProducts = mappedLiveProducts;
   const backendCategoryRecords = useMemo(
     () => extractCategoryRecords(categoriesRes),
     [categoriesRes]
@@ -739,15 +697,13 @@ const MeamoSkinBoostersArchive = ({
   const topCategoryEntries =
     backendCategoryNames.length > 0
       ? backendCategoryNames
-      : liveProductCategoryNames.length > 0
-        ? liveProductCategoryNames
-        : topCategories;
-  const sidebarCategoryEntries =
-    topCategoryEntries.length > 0
-      ? topCategoryEntries
-      : sidebarCategories;
+      : liveProductCategoryNames;
+  const sidebarCategoryEntries = topCategoryEntries;
   const normalizedInitialCategory = String(initialCategory || "").trim();
-  const fallbackCategory = normalizedInitialCategory || topCategoryEntries[0] || "Clinical";
+  const fallbackCategory =
+    normalizedInitialCategory && topCategoryEntries.includes(normalizedInitialCategory)
+      ? normalizedInitialCategory
+      : topCategoryEntries[0] || "";
   const [activeCategory, setActiveCategory] = useState(fallbackCategory);
   const [expandedFilter, setExpandedFilter] = useState("Categories");
   const [searchTerm, setSearchTerm] = useState("");
@@ -1177,11 +1133,14 @@ const MeamoSkinBoostersArchive = ({
                     <h2>Shop Korean Botox &amp; Beauty Products</h2>
                   </div>
                   <div className={styles.homeCategoryStat}>
-                    <strong>300+</strong>
+                    <strong>{catalogSourceProducts.length}</strong>
                     <span>Products</span>
                   </div>
                 </div>
                 <div className={styles.homeCategoryGrid}>
+                  {homeCategoryCards.length === 0 && (
+                    <p className={styles.statusMessage}>No live categories found.</p>
+                  )}
                   {homeCategoryCards.map((name) => {
                     const slug = toSlug(name);
                     const image =
@@ -1210,6 +1169,9 @@ const MeamoSkinBoostersArchive = ({
               <div className={styles.container}>
                 <h2 className={styles.homeCollectionTitle}>Newly Curated</h2>
                 <div className={styles.productGrid}>
+                  {featuredHomeProducts.length === 0 && (
+                    <p className={styles.statusMessage}>No live products found.</p>
+                  )}
                   {featuredHomeProducts.map((product) => (
                     <ProductCard
                       key={product._id}

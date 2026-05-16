@@ -1254,11 +1254,14 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
+  height: 100%;
   background: #fff;
   border-radius: 8px;
   padding: 28px 28px 20px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 1px 0 rgba(30, 25, 20, 0.04);
   overflow: hidden;
+  transition: box-shadow 180ms ease, transform 180ms ease;
 }
 
 .imageBox {
@@ -1322,12 +1325,12 @@
 
 .actionColumn {
   position: absolute;
-  top: 28px;
-  right: 22px;
+  top: 56px;
+  right: 18px;
   z-index: 4;
-  width: 38px;
+  width: 40px;
   display: grid;
-  gap: 6px;
+  gap: 8px;
   opacity: 0;
   transform: translateX(8px);
   transition: opacity 180ms ease, transform 180ms ease;
@@ -1339,39 +1342,39 @@
 }
 
 .actionColumn button {
-  width: 38px;
-  height: 38px;
-  overflow: hidden;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--meamo-line);
   border-radius: 50%;
   background: #fff;
-  color: transparent;
+  color: #555;
   cursor: pointer;
-  font-size: 0;
+  display: grid;
+  place-items: center;
   box-shadow: 0 7px 16px rgba(0, 0, 0, 0.08);
 }
 
-.actionColumn button::before {
+.actionColumn button:hover {
+  border-color: #cfc8c2;
+  transform: translateY(-1px);
+}
+
+.actionGlyph {
   display: grid;
   place-items: center;
-  width: 100%;
-  height: 100%;
-  color: #555;
-  font-size: 18px;
-  font-weight: 700;
+  width: 18px;
+  height: 18px;
 }
 
-.actionColumn button:nth-child(1)::before {
-  content: "+";
+.actionGlyph :global(svg) {
+  width: 18px;
+  height: 18px;
 }
 
-.actionColumn button:nth-child(2)::before {
-  content: "o";
-  font-size: 15px;
-}
-
-.actionColumn button:nth-child(3)::before {
-  content: "♡";
+.actionButtonActive {
+  background: #edf6ee !important;
+  border-color: #7ab483 !important;
+  color: var(--meamo-green-dark) !important;
 }
 
 .mobileActions {
@@ -1379,8 +1382,8 @@
 }
 
 .iconButton {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   display: grid;
   place-items: center;
   border: 1px solid var(--meamo-line);
@@ -1393,11 +1396,18 @@
 
 .productCard h3 {
   margin: 14px 0 9px;
-  min-height: 42px;
+  min-height: 88px;
   color: #333;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.35;
+}
+
+.productCard h3 a {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .productCard h3 a:hover {
@@ -1450,9 +1460,12 @@
 }
 
 .quantityRow {
+  margin-top: auto;
   display: grid;
   grid-template-columns: 36px 1fr 36px;
   border: 1px solid var(--meamo-line);
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .quantityRow button,
@@ -1481,9 +1494,12 @@
 }
 
 .cartButton {
-  height: 42px;
-  margin-top: 8px;
+  min-height: 50px;
+  margin-top: 10px;
   border-radius: 999px;
+  font-size: 14px;
+  letter-spacing: 0;
+  font-weight: 800;
 }
 
 .loadMore {
